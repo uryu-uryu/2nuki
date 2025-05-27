@@ -22,4 +22,24 @@ export const SMALL_TEXT_STYLE: Phaser.Types.GameObjects.Text.TextStyle = {
 export const STATUS_TEXT_STYLE: Phaser.Types.GameObjects.Text.TextStyle = {
     ...SMALL_TEXT_STYLE,
     color: LAYOUT.COLORS.GREEN,
-} as const; 
+} as const;
+
+export const COLORS = {
+  BOARD: 0xDEB887,
+  GRID: 0x8B4513,
+  BLACK_STONE: 0x000000,
+  WHITE_STONE: 0xFFFFFF,
+  WHITE_STONE_BORDER: 0x000000,
+  HIGHLIGHT: 0xFF0000,
+  BACKGROUND: 0xF5F5DC,
+  TEXT: {
+    PRIMARY: '#000000',
+    SECONDARY: '#666666',
+    WHITE: '#FFFFFF'
+  },
+  BUTTON: {
+    PRIMARY: '#4CAF50',
+    SECONDARY: '#2196F3',
+    DANGER: '#f44336'
+  }
+}; 

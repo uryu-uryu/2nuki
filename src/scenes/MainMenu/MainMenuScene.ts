@@ -1,4 +1,6 @@
 import * as Phaser from 'phaser';
+import { SCREEN, PADDING } from '../../consts/layout';
+import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from '../../consts/styles';
 
 export class MainMenuScene extends Phaser.Scene {
   constructor() {
@@ -7,22 +9,20 @@ export class MainMenuScene extends Phaser.Scene {
 
   create() {
     // 背景色を設定
-    this.cameras.main.setBackgroundColor('#F5F5DC');
+    this.cameras.main.setBackgroundColor(COLORS.BACKGROUND);
 
     // タイトルテキスト
-    this.add.text(400, 200, '五目並べ', {
-      fontSize: '48px',
-      color: '#000000',
-      fontFamily: 'Arial'
+    this.add.text(SCREEN.CENTER_X, 200, '五目並べ', {
+      ...LARGE_TEXT_STYLE,
+      color: COLORS.TEXT.PRIMARY
     }).setOrigin(0.5);
 
     // スタートボタン
-    const startButton = this.add.text(400, 300, 'ゲームを始める', {
-      fontSize: '24px',
-      color: '#FFFFFF',
-      backgroundColor: '#4CAF50',
-      padding: { x: 20, y: 10 },
-      fontFamily: 'Arial'
+    const startButton = this.add.text(SCREEN.CENTER_X, 300, 'ゲームを始める', {
+      ...DEFAULT_TEXT_STYLE,
+      color: COLORS.TEXT.WHITE,
+      backgroundColor: COLORS.BUTTON.PRIMARY,
+      padding: PADDING.MEDIUM
     }).setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
 

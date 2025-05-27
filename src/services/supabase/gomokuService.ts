@@ -11,13 +11,11 @@ import type {
   GameUpdateParams,
   Player
 } from '../../types';
+import { BOARD_SIZE } from '../../consts/const';
 
 // Supabaseの設定（環境変数から取得）
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
-
-// 盤面のサイズ（15x15の標準的な五目並べ）
-const BOARD_SIZE = 15;
 
 export class GomokuService {
   private supabase: SupabaseClient;

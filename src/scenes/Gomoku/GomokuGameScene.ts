@@ -1,26 +1,10 @@
 import * as Phaser from 'phaser';
 import { GomokuGameManager } from '../../utils/GomokuGameManager';
 import type { Gomoku, Player } from '../../types';
+import { BOARD, FONT, PADDING } from '../../consts/layout';
+import { COLORS, DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from '../../consts/styles';
 
-// 盤面の設定
-const BOARD_SIZE = 15;
-const CELL_SIZE = 30;
-const BOARD_OFFSET_X = 50;
-const BOARD_OFFSET_Y = 50;
-const STONE_RADIUS = 12;
-
-// 色の設定
-const COLORS = {
-  BOARD: 0xDEB887,
-  GRID: 0x8B4513,
-  BLACK_STONE: 0x000000,
-  WHITE_STONE: 0xFFFFFF,
-  WHITE_STONE_BORDER: 0x000000,
-  HIGHLIGHT: 0xFF0000,
-  BACKGROUND: 0xF5F5DC
-};
-
-export class GomokuGame extends Phaser.Scene {
+export class GomokuGameScene extends Phaser.Scene {
   private gameManager!: GomokuGameManager;
   private currentGameId: string | null = null;
   
@@ -101,76 +85,70 @@ export class GomokuGame extends Phaser.Scene {
     this.board = this.add.graphics();
     this.board.fillStyle(COLORS.BOARD);
     this.board.fillRect(
-      BOARD_OFFSET_X - 10,
-      BOARD_OFFSET_Y - 10,
-      BOARD_SIZE * CELL_SIZE + 20,
-      BOARD_SIZE * CELL_SIZE + 20
+      BOARD.OFFSET_X - 10,
+      BOARD.OFFSET_Y - 10,
+      BOARD.SIZE * BOARD.CELL_SIZE + 20,
+      BOARD.SIZE * BOARD.CELL_SIZE + 20
     );
 
     // グリッド線を描画
     this.board.lineStyle(1, COLORS.GRID);
-    for (let i = 0; i <= BOARD_SIZE; i++) {
+    for (let i = 0; i <= BOARD.SIZE; i++) {
       // 縦線
-      this.board.moveTo(BOARD_OFFSET_X + i * CELL_SIZE, BOARD_OFFSET_Y);
-      this.board.lineTo(BOARD_OFFSET_X + i * CELL_SIZE, BOARD_OFFSET_Y + BOARD_SIZE * CELL_SIZE);
+      this.board.moveTo(BOARD.OFFSET_X + i * BOARD.CELL_SIZE, BOARD.OFFSET_Y);
+      this.board.lineTo(BOARD.OFFSET_X + i * BOARD.CELL_SIZE, BOARD.OFFSET_Y + BOARD.SIZE * BOARD.CELL_SIZE);
       
       // 横線
-      this.board.moveTo(BOARD_OFFSET_X, BOARD_OFFSET_Y + i * CELL_SIZE);
-      this.board.lineTo(BOARD_OFFSET_X + BOARD_SIZE * CELL_SIZE, BOARD_OFFSET_Y + i * CELL_SIZE);
+      this.board.moveTo(BOARD.OFFSET_X, BOARD.OFFSET_Y + i * BOARD.CELL_SIZE);
+      this.board.lineTo(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE, BOARD.OFFSET_Y + i * BOARD.CELL_SIZE);
     }
     this.board.strokePath();
 
     // 石を配置するためのグラフィックス配列を初期化
-    this.stones = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null));
+    this.stones = Array(BOARD.SIZE).fill(null).map(() => Array(BOARD.SIZE).fill(null));
   }
 
   private createUI() {
     // 情報表示テキスト
-    this.infoText = this.add.text(BOARD_OFFSET_X + BOARD_SIZE * CELL_SIZE + 50, BOARD_OFFSET_Y, '', {
-      fontSize: '16px',
-      color: '#000000',
-      fontFamily: 'Arial'
+    this.infoText = this.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50, BOARD.OFFSET_Y, '', {
+      ...DEFAULT_TEXT_STYLE,
+      color: COLORS.TEXT.PRIMARY
     });
 
     // ステータステキスト
-    this.statusText = this.add.text(BOARD_OFFSET_X + BOARD_SIZE * CELL_SIZE + 50, BOARD_OFFSET_Y + 120, '', {
-      fontSize: '14px',
-      color: '#000000',
-      fontFamily: 'Arial'
+    this.statusText = this.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50, BOARD.OFFSET_Y + 120, '', {
+      ...DEFAULT_TEXT_STYLE,
+      color: COLORS.TEXT.PRIMARY
     });
 
     // ゲーム作成ボタン
-    this.createGameButton = this.add.text(BOARD_OFFSET_X + BOARD_SIZE * CELL_SIZE + 50, BOARD_OFFSET_Y + 200, 'ゲーム作成', {
-      fontSize: '16px',
-      color: '#FFFFFF',
-      backgroundColor: '#4CAF50',
-      padding: { x: 10, y: 5 },
-      fontFamily: 'Arial'
+    this.createGameButton = this.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50, BOARD.OFFSET_Y + 200, 'ゲーム作成', {
+      ...DEFAULT_TEXT_STYLE,
+      color: COLORS.TEXT.WHITE,
+      backgroundColor: COLORS.BUTTON.PRIMARY,
+      padding: PADDING.SMALL
     }).setInteractive({ useHandCursor: true });
 
     // ゲーム放棄ボタン
-    this.forfeitButton = this.add.text(BOARD_OFFSET_X + BOARD_SIZE * CELL_SIZE + 50, BOARD_OFFSET_Y + 250, 'ゲーム放棄', {
-      fontSize: '16px',
-      color: '#FFFFFF',
-      backgroundColor: '#f44336',
-      padding: { x: 10, y: 5 },
-      fontFamily: 'Arial'
+    this.forfeitButton = this.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50, BOARD.OFFSET_Y + 250, 'ゲーム放棄', {
+      ...DEFAULT_TEXT_STYLE,
+      color: COLORS.TEXT.WHITE,
+      backgroundColor: COLORS.BUTTON.DANGER,
+      padding: PADDING.SMALL
     }).setInteractive({ useHandCursor: true }).setVisible(false);
 
     // デバッグ情報テキスト
     this.debugText = this.add.text(10, 10, '', {
-      fontSize: '12px',
-      color: '#666666',
-      fontFamily: 'Arial'
+      ...SMALL_TEXT_STYLE,
+      color: COLORS.TEXT.SECONDARY
     });
 
     // 戻るボタン
     this.backButton = this.add.text(10, 10, '戻る', {
-      fontSize: '16px',
-      color: '#FFFFFF',
-      backgroundColor: '#4CAF50',
-      padding: { x: 10, y: 5 },
-      fontFamily: 'Arial'
+      ...DEFAULT_TEXT_STYLE,
+      color: COLORS.TEXT.WHITE,
+      backgroundColor: COLORS.BUTTON.PRIMARY,
+      padding: PADDING.SMALL
     }).setInteractive({ useHandCursor: true });
   }
 
@@ -180,18 +158,18 @@ export class GomokuGame extends Phaser.Scene {
       if (this.isLoading || !this.currentGameId) return;
 
       // クリック位置を交点に合わせて調整
-      const x = pointer.x - BOARD_OFFSET_X;
-      const y = pointer.y - BOARD_OFFSET_Y;
+      const x = pointer.x - BOARD.OFFSET_X;
+      const y = pointer.y - BOARD.OFFSET_Y;
 
-      if (x >= -CELL_SIZE/2 && y >= -CELL_SIZE/2 && 
-          x <= BOARD_SIZE * CELL_SIZE + CELL_SIZE/2 && 
-          y <= BOARD_SIZE * CELL_SIZE + CELL_SIZE/2) {
+      if (x >= -BOARD.CELL_SIZE/2 && y >= -BOARD.CELL_SIZE/2 && 
+          x <= BOARD.SIZE * BOARD.CELL_SIZE + BOARD.CELL_SIZE/2 && 
+          y <= BOARD.SIZE * BOARD.CELL_SIZE + BOARD.CELL_SIZE/2) {
         
         // 最も近い交点を計算
-        const col = Math.round(x / CELL_SIZE);
-        const row = Math.round(y / CELL_SIZE);
+        const col = Math.round(x / BOARD.CELL_SIZE);
+        const row = Math.round(y / BOARD.CELL_SIZE);
 
-        if (col >= 0 && col < BOARD_SIZE && row >= 0 && row < BOARD_SIZE &&
+        if (col >= 0 && col < BOARD.SIZE && row >= 0 && row < BOARD.SIZE &&
             this.gameManager.canPlaceStone(this.currentGameId, row, col)) {
           this.makeMove(row, col);
         }
@@ -285,8 +263,8 @@ export class GomokuGame extends Phaser.Scene {
     if (!game) return;
 
     // 既存の石をクリア
-    for (let row = 0; row < BOARD_SIZE; row++) {
-      for (let col = 0; col < BOARD_SIZE; col++) {
+    for (let row = 0; row < BOARD.SIZE; row++) {
+      for (let col = 0; col < BOARD.SIZE; col++) {
         if (this.stones[row][col]) {
           this.stones[row][col]!.destroy();
           this.stones[row][col] = null;
@@ -296,8 +274,8 @@ export class GomokuGame extends Phaser.Scene {
 
     // 新しい石を配置
     const board = game.board_state;
-    for (let row = 0; row < BOARD_SIZE; row++) {
-      for (let col = 0; col < BOARD_SIZE; col++) {
+    for (let row = 0; row < BOARD.SIZE; row++) {
+      for (let col = 0; col < BOARD.SIZE; col++) {
         const cellValue = board[row][col];
         if (cellValue !== 0) {
           this.drawStone(row, col, cellValue);
@@ -307,22 +285,21 @@ export class GomokuGame extends Phaser.Scene {
   }
 
   private drawStone(row: number, col: number, stoneType: number) {
-    // 交点の位置に石を配置するように調整
-    const x = BOARD_OFFSET_X + (col * CELL_SIZE);
-    const y = BOARD_OFFSET_Y + (row * CELL_SIZE);
+    const x = BOARD.OFFSET_X + (col * BOARD.CELL_SIZE);
+    const y = BOARD.OFFSET_Y + (row * BOARD.CELL_SIZE);
 
     const stone = this.add.graphics();
 
     if (stoneType === 1) {
       // 黒石
       stone.fillStyle(COLORS.BLACK_STONE);
-      stone.fillCircle(x, y, STONE_RADIUS);
+      stone.fillCircle(x, y, BOARD.STONE_RADIUS);
     } else if (stoneType === 2) {
       // 白石
       stone.fillStyle(COLORS.WHITE_STONE);
-      stone.fillCircle(x, y, STONE_RADIUS);
+      stone.fillCircle(x, y, BOARD.STONE_RADIUS);
       stone.lineStyle(2, COLORS.WHITE_STONE_BORDER);
-      stone.strokeCircle(x, y, STONE_RADIUS);
+      stone.strokeCircle(x, y, BOARD.STONE_RADIUS);
     }
 
     this.stones[row][col] = stone;

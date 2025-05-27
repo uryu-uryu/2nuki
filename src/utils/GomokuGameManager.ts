@@ -1,3 +1,4 @@
+import { BOARD_SIZE } from '../consts/const';
 import { GomokuService } from '../services/supabase/gomokuService';
 import type { Gomoku, GameCreateParams, Player } from '../types';
 
@@ -228,7 +229,7 @@ export class GomokuGameManager {
     const game = this.getGame(gameId);
     if (!game || !this.canMakeMove(gameId)) return false;
     
-    if (row < 0 || row >= 15 || col < 0 || col >= 15) return false;
+    if (row < 0 || row >= BOARD_SIZE || col < 0 || col >= BOARD_SIZE) return false;
     return game.board_state[row][col] === 0;
   }
 

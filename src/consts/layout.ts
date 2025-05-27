@@ -1,3 +1,5 @@
+import { BOARD_SIZE } from './const';
+
 // レイアウト関連の定数
 export const LAYOUT = {
   // 画面全体サイズ
@@ -38,3 +40,33 @@ export const LAYOUT = {
   // 背景色
   BACKGROUND_COLOR: '#028af8',
 } as const;
+
+export const BOARD = {
+  CELL_SIZE: 30,
+  OFFSET_X: 50,
+  OFFSET_Y: 50,
+  STONE_RADIUS: 12,
+  get SIZE() { return BOARD_SIZE; }
+};
+
+export const SCREEN = {
+  CENTER_X: 400,
+  CENTER_Y: 300
+};
+
+export const PADDING = {
+  SMALL: { x: 10, y: 5 },
+  MEDIUM: { x: 20, y: 10 }
+};
+
+export const FONT = {
+  FAMILY: 'Arial',
+  SIZES: {
+    SMALL: '12px',
+    NORMAL: '14px',
+    MEDIUM: '16px',
+    LARGE: '24px',
+    TITLE: '32px',
+    HERO: '48px'
+  }
+};
