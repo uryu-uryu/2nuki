@@ -1,0 +1,51 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+以下の指示に従って、効率的かつ正確にタスクを遂行してください。
+
+■ このアプリケーションの概要
+オンライン対戦可能な五目並べに似たゲームアプリ。
+
+■ 主な技術スタック
+- Typescript
+- Phaser.js
+- Supabase
+
+■ 実装時の注意点
+- 常に既存コードの設計や記法を参考にすること
+- /docs 内の仕様を参照すること
+- クラスのmain関数が長くなる場合、適切な粒度でメソッドを分割すること
+- 書籍「リーダブルコード」のようなベストプラクティスを常に適用してください
+- コードの意図・背景などのコメントを日本語で積極的に入れること。
+- 関数には DocString を記載すること
+- デバッグ時に表示する文言は日本語とすること
+- container-Presenter パターンを意識し、UI とロジックを分けて実装すること
+
+
+■ directory構成
+├── src/
+│   ├── components/            # 共通利用するUIコンポーネント
+│   ├── consts/                # 定数やレイアウト・スタイル設定
+│   ├── scenes/                # ゲームやアプリのシーン管理
+│   │   └── Game/              # ゲーム本体のロジック・状態管理
+│   │       └── components/    # ゲーム内のUI部品
+│   │       └── GameStore      # ゲーム状態管理
+│   │       └── Gamecontroller # ゲームロジック制御
+│   ├── services/              # 外部サービス連携（例: Supabase）
+│   │   └── supabase/          # Supabase用の設定・API
+│   ├── types/                 # 型定義（TypeScript用）
+│   └── main.ts                # エントリーポイント
+│
+├── public/                    # 公開用静的ファイル（現状空）
+├── assets/                    # 画像・音声などのアセット（現状空）
+├── dist/                      # ビルド成果物（自動生成）
+├── docs/                      # ドキュメント（現状空）
+├── scripts/                   # DBセットアップ等のスクリプト
+│   └── db/                    # データベース初期化・セキュリティ設定SQL
+├── index.html                 # ルートHTML
+├── package.json               # npmパッケージ管理
+├── tsconfig.json              # TypeScript設定
+├── vite.config.ts             # Viteビルド設定
+└── README.md                  # プロジェクト説明
