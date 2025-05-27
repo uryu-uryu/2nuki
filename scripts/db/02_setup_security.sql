@@ -1,3 +1,4 @@
+-- sample です。
 -- RLSを有効化
 ALTER TABLE game_state ENABLE ROW LEVEL SECURITY;
 

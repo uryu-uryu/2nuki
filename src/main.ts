@@ -1,31 +1,31 @@
-import Phaser from 'phaser';
-import { Boot } from './scenes/Boot.ts';
-import { Game } from './scenes/Game/index.ts';
-import { Preloader } from './scenes/Preloader.ts';
-import { LAYOUT } from './consts/layout.ts';
+import * as Phaser from 'phaser';
+import { gomokuConfig } from './config';
 
-const config: Phaser.Types.Core.GameConfig = {
-    type: Phaser.AUTO,
-    width: LAYOUT.GAME.WIDTH,
-    height: LAYOUT.GAME.HEIGHT,
-    parent: 'game-container',
-    backgroundColor: LAYOUT.BACKGROUND_COLOR,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            debug: false,
-            gravity: { x:0, y: 500 }
-        }
-    },
-    scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
-    },
-    scene: [
-        Boot,
-        Preloader,
-        Game,
-    ]
-};
+// DOMが読み込まれた後にゲームを開始
+document.addEventListener('DOMContentLoaded', () => {
+  // ゲームコンテナを取得または作成
+  let gameContainer = document.getElementById('game-container');
+  if (!gameContainer) {
+    gameContainer = document.createElement('div');
+    gameContainer.id = 'game-container';
+    document.body.appendChild(gameContainer);
+  }
 
-new Phaser.Game(config);
+  // Phaserゲームインスタンスを作成
+  const game = new Phaser.Game({
+    ...gomokuConfig,
+    parent: 'game-container'
+  });
+
+  // ブラウザのリサイズ時にゲームサイズを調整
+  window.addEventListener('resize', () => {
+    game.scale.refresh();
+  });
+
+  // ページを離れる時にリソースをクリーンアップ
+  window.addEventListener('beforeunload', () => {
+    game.destroy(true);
+  });
+
+  console.log('五目並べゲームが開始されました！');
+});
