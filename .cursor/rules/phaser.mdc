@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 以下の指示に従って、効率的かつ正確にタスクを遂行してください。
 
@@ -12,6 +12,7 @@ alwaysApply: false
 - Typescript
 - Phaser.js
 - Supabase
+- Vite
 
 ■ 実装時の注意点
 - 常に既存コードの設計や記法を参考にすること
