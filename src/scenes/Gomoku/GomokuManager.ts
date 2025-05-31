@@ -26,43 +26,7 @@
 import { BOARD_SIZE } from '../../consts/const';
 import { GomokuRepository } from '../../repository/supabase/gomokuRepository';
 import type { Gomoku, GameCreateParams, Player } from '../../types';
-
-export interface GameSession {
-  id: string;
-  gameData: Gomoku;
-  isActive: boolean;
-  lastUpdateTime: number;
-}
-
-export interface GameManagerEvents {
-  gameCreated: (game: Gomoku) => void;
-  gameUpdated: (game: Gomoku) => void;
-  gameFinished: (game: Gomoku, winner: Player | null) => void;
-  error: (error: string) => void;
-}
-
-// ゲーム状態の更新用インターフェース
-export interface GameUpdateData {
-  board_state: number[][];
-  updated_at: string;
-  is_finished?: boolean;
-  winner_id?: string;
-  finished_at?: string;
-  current_player_turn?: string;
-}
-
-// デバッグ情報用インターフェース
-export interface DebugInfo {
-  activeSessions: {
-    [gameId: string]: {
-      id: string;
-      isActive: boolean;
-      lastUpdateTime: number;
-      gameData: Gomoku;
-    }
-  };
-  playerId: string;
-}
+import type { GameSession, GameManagerEvents, GameUpdateData, DebugInfo } from '../../types/gomoku';
 
 export class GomokuManager {
   private gomokuService: GomokuRepository;
@@ -109,7 +73,7 @@ export class GomokuManager {
         this.emit('gameCreated', newGame);
         return newGame;
       }
-      
+
       this.emit('error', 'ゲームの作成に失敗しました');
       return null;
     } catch (error) {
@@ -150,7 +114,7 @@ export class GomokuManager {
 
       // 勝敗判定
       const isWinner = this.checkWinner(newBoardState, row, col, playerStone);
-      
+
       // 次のプレイヤーを決定
       const nextPlayer = this.playerId === game.black_player_id
         ? game.white_player_id
@@ -267,7 +231,7 @@ export class GomokuManager {
   getPlayerColor(gameId: string): Player | null {
     const game = this.getGame(gameId);
     if (!game) return null;
-    
+
     if (game.black_player_id === this.playerId) {
       return 'black';
     }
@@ -308,11 +272,11 @@ export class GomokuManager {
       const wasFinished = session.gameData.is_finished;
       session.gameData = game;
       session.lastUpdateTime = Date.now();
-      
+
       // ゲームが終了した場合
       if (!wasFinished && game.is_finished) {
         session.isActive = false;
-        const winner = game.winner_id ? 
+        const winner = game.winner_id ?
           (game.winner_id === game.black_player_id ? 'black' : 'white') : null;
         this.emit('gameFinished', game, winner);
       }
@@ -325,7 +289,7 @@ export class GomokuManager {
   async loadPlayerGames(): Promise<Gomoku[]> {
     try {
       const games = await this.gomokuService.getPlayerGames(this.playerId);
-      
+
       // セッションに追加
       games.forEach(game => {
         if (!this.activeSessions.has(game.id)) {
@@ -385,7 +349,7 @@ export class GomokuManager {
   canPlaceStone(gameId: string, row: number, col: number): boolean {
     const game = this.getGame(gameId);
     if (!game || !this.canMakeMove(gameId)) return false;
-    
+
     if (row < 0 || row >= BOARD_SIZE || col < 0 || col >= BOARD_SIZE) return false;
     return game.board_state[row][col] === 0;
   }
