@@ -9,23 +9,23 @@
 
 import * as Phaser from 'phaser';
 import { GomokuContainer } from './GomokuContainer';
-import { GomokuBoardRender } from './service/GomokuBoard';
-import { GomokuUI } from './service/GomokuUI';
-import { GomokuState } from './service/GomokuState';
+import { GomokuBoardRender } from './view/GomokuBoard';
+import { GomokuUI } from './view/GomokuUI';
+import { GomokuSessionController } from './view/GomokuSessionController';
 import type { Gomoku, Player } from '../../types';
 
 export class GomokuGameScene extends Phaser.Scene {
   private gameManager!: GomokuContainer;
   private gameBoard!: GomokuBoardRender;
   private ui!: GomokuUI;
-  private state!: GomokuState;
+  private state!: GomokuSessionController;
 
   constructor() {
     super({ key: 'GomokuGame' });
   }
 
   init(data: { playerId: string }) {
-    this.state = new GomokuState();
+    this.state = new GomokuSessionController();
     this.gameManager = new GomokuContainer(data.playerId);
     this.setupGameManagerEvents();
   }
