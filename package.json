@@ -10,7 +10,8 @@
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint src/**/*.{ts,tsx} --fix",
     "typecheck": "tsc --noEmit",
-    "typecheck:watch": "tsc --noEmit --watch"
+    "typecheck:watch": "tsc --noEmit --watch",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -18,11 +19,20 @@
     "@typescript-eslint/parser": "^8.33.0",
     "eslint": "^9.28.0",
     "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0",
+    "tsc-files": "^1.1.4",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.8",
     "phaser": "^3.88.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "tsc-files --noEmit"
+    ]
   }
 }
