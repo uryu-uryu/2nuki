@@ -1,5 +1,5 @@
 /**
- * GomokuManager - 五目並べゲームの状態管理クラス
+ * GomokuContainer - 五目並べゲームの状態管理クラス
  * 
  * このクラスは以下の責務を持ちます：
  * 1. ゲームの状態管理
@@ -28,7 +28,7 @@ import { GomokuRepository } from '../../repository/supabase/gomokuRepository';
 import type { Gomoku, GameCreateParams, Player } from '../../types';
 import type { GameSession, GameManagerEvents, GameUpdateData, DebugInfo } from '../../types/gomoku';
 
-export class GomokuManager {
+export class GomokuContainer {
   private gomokuService: GomokuRepository;
   private activeSessions: Map<string, GameSession> = new Map();
   private eventHandlers: Partial<GameManagerEvents> = {};

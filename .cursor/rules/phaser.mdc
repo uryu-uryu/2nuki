@@ -33,8 +33,9 @@ alwaysApply: true
 │   ├── scenes/                # ゲームやアプリのシーン管理
 │   │   └── Game/              # ゲーム本体のロジック・状態管理
 │   │       └── components/    # ゲーム内のUI部品
+│   │       └── services/      # UI 関連の補助関数など
 │   │       └── GameScene      # ゲームのシーン管理
-│   │       └── GameManager    # ゲームロジック制御
+│   │       └── GameContainer  # ゲームロジック制御
 │   ├── repository/            # DB 連携（例: Supabase）
 │   │   └── supabase/          # Supabase用の設定・API
 │   ├── types/                 # 型定義（TypeScript用）
