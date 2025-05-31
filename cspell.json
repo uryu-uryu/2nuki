@@ -6,7 +6,8 @@
         "supabase",
         "phaser",
         "realtime",
-        "postgrest"
+        "postgrest",
+        "vite"
     ],
     "ignorePaths": [
         "node_modules/**",
