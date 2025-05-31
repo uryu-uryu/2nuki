@@ -8,7 +8,6 @@ import {
 import type {
   Gomoku,
   GameCreateParams,
-  GameUpdateParams,
   Player
 } from '../../types';
 import { BOARD_SIZE } from '../../consts/const';
@@ -175,8 +174,8 @@ export class GomokuRepository {
 
   // ユーティリティ: 現在のターンのプレイヤー色を取得
   getCurrentTurnColor(game: Gomoku): Player {
-    return game[GOMOKU_COLUMNS.CURRENT_PLAYER_TURN] === game[GOMOKU_COLUMNS.BLACK_PLAYER_ID] 
-      ? 'black' 
+    return game[GOMOKU_COLUMNS.CURRENT_PLAYER_TURN] === game[GOMOKU_COLUMNS.BLACK_PLAYER_ID]
+      ? 'black'
       : 'white';
   }
 } 

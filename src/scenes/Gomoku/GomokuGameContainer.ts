@@ -1,5 +1,6 @@
 import type { Gomoku, Player } from '../../types';
 import { GomokuGameManager } from './GomokuGameManager';
+import type { DebugInfo } from './GomokuGameManager';
 
 export class GomokuGameContainer {
   private gameManager: GomokuGameManager;
@@ -143,7 +144,7 @@ export class GomokuGameContainer {
   }
 
   // デバッグ情報
-  getDebugInfo(): any {
+  getDebugInfo(): DebugInfo {
     return this.gameManager.getDebugInfo();
   }
 } 

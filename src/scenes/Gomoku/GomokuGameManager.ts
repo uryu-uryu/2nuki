@@ -41,6 +41,29 @@ export interface GameManagerEvents {
   error: (error: string) => void;
 }
 
+// ゲーム状態の更新用インターフェース
+export interface GameUpdateData {
+  board_state: number[][];
+  updated_at: string;
+  is_finished?: boolean;
+  winner_id?: string;
+  finished_at?: string;
+  current_player_turn?: string;
+}
+
+// デバッグ情報用インターフェース
+export interface DebugInfo {
+  activeSessions: {
+    [gameId: string]: {
+      id: string;
+      isActive: boolean;
+      lastUpdateTime: number;
+      gameData: Gomoku;
+    }
+  };
+  playerId: string;
+}
+
 export class GomokuGameManager {
   private gomokuService: GomokuRepository;
   private activeSessions: Map<string, GameSession> = new Map();
@@ -62,7 +85,8 @@ export class GomokuGameManager {
   private emit<K extends keyof GameManagerEvents>(event: K, ...args: Parameters<GameManagerEvents[K]>): void {
     const handler = this.eventHandlers[event];
     if (handler) {
-      (handler as any)(...args);
+      const typedHandler = handler as (...args: Parameters<GameManagerEvents[K]>) => void;
+      typedHandler(...args);
     }
   }
 
@@ -133,7 +157,7 @@ export class GomokuGameManager {
         : game.black_player_id;
 
       // ゲーム状態を更新
-      const updateData: any = {
+      const updateData: GameUpdateData = {
         board_state: newBoardState,
         updated_at: new Date().toISOString(),
       };
@@ -374,16 +398,10 @@ export class GomokuGameManager {
   }
 
   // デバッグ情報を取得
-  getDebugInfo(): any {
+  getDebugInfo(): DebugInfo {
     return {
-      playerId: this.playerId,
-      activeSessionsCount: this.activeSessions.size,
-      sessions: Array.from(this.activeSessions.entries()).map(([id, session]) => ({
-        id,
-        isActive: session.isActive,
-        isFinished: session.gameData.is_finished,
-        lastUpdate: new Date(session.lastUpdateTime).toISOString()
-      }))
+      activeSessions: Object.fromEntries(this.activeSessions),
+      playerId: this.playerId
     };
   }
 } 

@@ -36,8 +36,6 @@ export interface Gomoku {
   [GOMOKU_COLUMNS.FINISHED_AT]?: string | null;
 }
 
-export type CellState = 0 | 1 | 2;
-
 export interface GameCreateParams {
   blackPlayerId: string;
   whitePlayerId: string;
@@ -50,7 +48,7 @@ export interface GameUpdateParams {
 }
 
 // データベース操作の結果型
-export interface DatabaseResult<T = any> {
+export interface DatabaseResult<T = unknown> {
   data: T | null;
   error: Error | null;
 }
@@ -58,8 +56,8 @@ export interface DatabaseResult<T = any> {
 // リアルタイム更新のペイロード型
 export interface RealtimePayload {
   eventType: 'INSERT' | 'UPDATE' | 'DELETE';
-  new?: Record<string, any>;
-  old?: Record<string, any>;
+  new?: Record<string, unknown>;
+  old?: Record<string, unknown>;
   schema: string;
   table: string;
 }
