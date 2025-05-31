@@ -308,7 +308,7 @@ export class GomokuGameScene extends Phaser.Scene {
   private updateDisplay() {
     // デバッグ情報を更新
     const debugInfo = this.gameManager.getDebugInfo();
-    this.debugText.setText(`Player: ${debugInfo.playerId.substring(0, 12)}... | Sessions: ${debugInfo.activeSessionsCount}`);
+    this.debugText.setText(`Player: ${debugInfo.playerId.substring(0, 12)}... | Sessions: ${debugInfo.activeSessions}`);
 
     if (!this.currentGameId) {
       this.infoText.setText('プレイヤーID:\n' + this.gameManager.getPlayerId().substring(0, 20) + '...');
