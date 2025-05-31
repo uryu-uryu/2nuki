@@ -156,17 +156,27 @@ export class GomokuGameScene extends Phaser.Scene {
     this.gameBoard.updateBoard(game.board_state);
   }
 
-  private updateDisplay() {
+  /**
+   * デバッグ情報の表示を更新する
+   */
+  private updateDebugDisplay() {
     const debugInfo = this.gameManager.getDebugInfo();
     const activeSessions = Object.values(debugInfo.activeSessions).filter(session => session.isActive).length;
     this.ui.updateDebugInfo(debugInfo.playerId, activeSessions);
+  }
 
-    const gameId = this.state.getGameId();
-    if (!gameId) {
-      this.ui.updateForNoGame(this.gameManager.getPlayerId(), this.state.isGameLoading());
-      return;
-    }
+  /**
+   * ゲームが存在しない場合の表示を更新する
+   */
+  private updateNoGameDisplay() {
+    this.ui.updateForNoGame(this.gameManager.getPlayerId(), this.state.isGameLoading());
+  }
 
+  /**
+   * アクティブなゲームの情報を表示する
+   * @param gameId 表示対象のゲームID
+   */
+  private updateActiveGameDisplay(gameId: string) {
     const game = this.gameManager.getGame(gameId);
     if (!game) return;
 
@@ -177,9 +187,29 @@ export class GomokuGameScene extends Phaser.Scene {
     const winner = this.gameManager.getWinner(gameId);
     const isPlayerTurn = this.gameManager.isPlayerTurn(gameId);
 
+    // ゲーム情報の更新
     this.ui.updateGameInfo(game, playerColor, isGameFinished, winner, this.state.isGameLoading());
     this.ui.updateGameStatus(isGameFinished, isPlayerTurn, this.state.isGameLoading());
     this.ui.updateButtonVisibility(isGameFinished, this.state.isGameLoading());
+  }
+
+  /**
+   * 画面表示全体を更新する
+   * デバッグ情報とゲーム状態に応じた表示の更新を行う
+   */
+  private updateDisplay() {
+    // デバッグ情報の更新
+    this.updateDebugDisplay();
+
+    // ゲームIDの取得
+    const gameId = this.state.getGameId();
+    if (!gameId) {
+      this.updateNoGameDisplay();
+      return;
+    }
+
+    // アクティブなゲームの表示更新
+    this.updateActiveGameDisplay(gameId);
   }
 
   private showGameResult(winner: Player | null) {
