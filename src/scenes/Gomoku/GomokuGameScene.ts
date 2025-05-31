@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
-import { GomokuGameManager } from '../../utils/GomokuGameManager';
+import { GomokuGameManager } from './GomokuGameManager';
 import type { Gomoku, Player } from '../../types';
-import { BOARD, FONT, PADDING } from '../../consts/layout';
+import { BOARD, PADDING } from '../../consts/layout';
 import { COLORS, DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from '../../consts/styles';
 
 export class GomokuGameScene extends Phaser.Scene {
@@ -332,9 +332,9 @@ export class GomokuGameScene extends Phaser.Scene {
     infoText += `作成日時: ${new Date(game.created_at).toLocaleTimeString()}\n`;
     
     if (this.isLoading) {
-      infoText += `状態: 処理中...`;
+      infoText += '状態: 処理中...';
     } else if (isGameFinished) {
-      infoText += `状態: ゲーム終了\n`;
+      infoText += '状態: ゲーム終了\n';
       if (winner) {
         const winnerText = winner === playerColor ? 'あなたの勝利!' : '相手の勝利';
         infoText += `結果: ${winnerText}`;
