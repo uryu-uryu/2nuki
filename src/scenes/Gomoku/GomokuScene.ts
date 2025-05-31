@@ -1,11 +1,11 @@
 import * as Phaser from 'phaser';
-import { GomokuGameManager } from './GomokuGameManager';
+import { GomokuManager } from './GomokuManager';
 import type { Gomoku, Player } from '../../types';
 import { BOARD, PADDING } from '../../consts/layout';
 import { COLORS, DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from '../../consts/styles';
 
 export class GomokuGameScene extends Phaser.Scene {
-  private gameManager!: GomokuGameManager;
+  private gameManager!: GomokuManager;
   private currentGameId: string | null = null;
   
   // UI要素
@@ -26,7 +26,7 @@ export class GomokuGameScene extends Phaser.Scene {
   }
 
   init(data: { playerId: string }) {
-    this.gameManager = new GomokuGameManager(data.playerId);
+    this.gameManager = new GomokuManager(data.playerId);
     this.setupGameManagerEvents();
   }
 

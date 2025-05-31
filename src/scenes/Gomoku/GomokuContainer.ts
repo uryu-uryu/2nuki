@@ -1,14 +1,39 @@
-import type { Gomoku, Player } from '../../types';
-import { GomokuGameManager } from './GomokuGameManager';
-import type { DebugInfo } from './GomokuGameManager';
+/**
+ * GomokuContainer - 五目並べゲームのコンテナクラス
+ * 
+ * このクラスは以下の責務を持ちます：
+ * 1. ゲームマネージャーとの連携
+ *    - GomokuGameManagerのインスタンス管理
+ *    - ゲームマネージャーのイベントハンドリング
+ *    - ゲーム状態の更新通知
+ * 
+ * 2. ゲームセッション管理
+ *    - 現在のゲームIDの管理
+ *    - ローディング状態の管理
+ *    - 既存ゲームのロード
+ * 
+ * 3. ユーザーインタラクション制御
+ *    - ゲーム操作（石を置く、投了など）の仲介
+ *    - ゲーム状態の参照機能の提供
+ *    - エラーハンドリングとフィードバック
+ * 
+ * 4. UI更新のトリガー
+ *    - ゲーム状態変更時のコールバック実行
+ *    - エラー発生時の通知
+ *    - ゲーム終了時の結果通知
+ */
 
-export class GomokuGameContainer {
-  private gameManager: GomokuGameManager;
+import type { Gomoku, Player } from '../../types';
+import { GomokuManager } from './GomokuManager';
+import type { DebugInfo } from './GomokuManager';
+
+export class GomokuContainer {
+  private gameManager: GomokuManager;
   private currentGameId: string | null = null;
   private isLoading: boolean = false;
 
   constructor(playerId: string) {
-    this.gameManager = new GomokuGameManager(playerId);
+    this.gameManager = new GomokuManager(playerId);
     this.setupGameManagerEvents();
   }
 

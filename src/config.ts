@@ -1,4 +1,4 @@
-import { GomokuGameScene } from './scenes/Gomoku/GomokuGameScene';
+import { GomokuGameScene } from './scenes/Gomoku/GomokuScene';
 import { MainMenuScene } from './scenes/MainMenu/MainMenuScene';
 import { PlayerSelectScene } from './scenes/PlayerSelect/PlayerSelectScene';
 import { LAYOUT } from './consts/layout';

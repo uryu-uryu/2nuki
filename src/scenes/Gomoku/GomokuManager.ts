@@ -1,5 +1,5 @@
 /**
- * GomokuGameManager - 五目並べゲームの状態管理クラス
+ * GomokuManager - 五目並べゲームの状態管理クラス
  * 
  * このクラスは以下の責務を持ちます：
  * 1. ゲームの状態管理
@@ -64,7 +64,7 @@ export interface DebugInfo {
   playerId: string;
 }
 
-export class GomokuGameManager {
+export class GomokuManager {
   private gomokuService: GomokuRepository;
   private activeSessions: Map<string, GameSession> = new Map();
   private eventHandlers: Partial<GameManagerEvents> = {};
