@@ -15,6 +15,7 @@ alwaysApply: false
 
 ■ 実装時の注意点
 - 常に既存コードの設計や記法を参考にすること
+- 各ファイルの先頭に、該当ファイルのまとめ(目的や概要、責務)を必ず示すこと
 - /docs 内の仕様を参照すること
 - クラスのmain関数が長くなる場合、適切な粒度でメソッドを分割すること
 - 書籍「リーダブルコード」のようなベストプラクティスを常に適用してください
@@ -31,9 +32,9 @@ alwaysApply: false
 │   ├── scenes/                # ゲームやアプリのシーン管理
 │   │   └── Game/              # ゲーム本体のロジック・状態管理
 │   │       └── components/    # ゲーム内のUI部品
-│   │       └── GameStore      # ゲーム状態管理
-│   │       └── Gamecontroller # ゲームロジック制御
-│   ├── services/              # 外部サービス連携（例: Supabase）
+│   │       └── GameScene      # ゲームのシーン管理
+│   │       └── GameManager    # ゲームロジック制御
+│   ├── repository/            # DB 連携（例: Supabase）
 │   │   └── supabase/          # Supabase用の設定・API
 │   ├── types/                 # 型定義（TypeScript用）
 │   └── main.ts                # エントリーポイント
