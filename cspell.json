@@ -1,0 +1,15 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "words": [
+        "gomoku",
+        "supabase",
+        "phaser",
+        "realtime",
+        "postgrest"
+    ],
+    "ignorePaths": [
+        "node_modules/**",
+        "dist/**"
+    ]
+}
