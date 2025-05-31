@@ -4,14 +4,10 @@ import {
   GOMOKU_COLUMNS,
   REALTIME_CHANNELS,
   DB_SCHEMA,
-} from '../../types';
-import type {
-  Gomoku,
-  GameCreateParams,
-  Player
-} from '../../types';
-import { BOARD_SIZE } from '../../consts/const';
-import { logger } from '../../utils/logger';
+} from 'src/types';
+import type { Gomoku, GameCreateParams, Player } from 'src/types';
+import { BOARD_SIZE } from 'src/consts/const';
+import { logger } from 'src/utils/logger';
 
 // Supabaseの設定（環境変数から取得）
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';

@@ -7,11 +7,11 @@
  * 3. ゲームデータの同期
  */
 
-import type { Gomoku, GameCreateParams } from '../../../types';
-import type { GameUpdateData } from '../../../types/gomoku';
-import { GomokuRepository } from '../../../repository/supabase/gomokuRepository';
-import { SessionManager } from './SessionManager';
-import { GameEvents } from '../core/GameEvents';
+import type { Gomoku, GameCreateParams } from 'src/types';
+import type { GameUpdateData } from 'src/types/gomoku';
+import { GomokuRepository } from 'src/repository/supabase/gomokuRepository';
+import { SessionManager } from 'src/scenes/Gomoku/online/SessionManager';
+import { GameEvents } from 'src/scenes/Gomoku/core/GameEvents';
 
 export class SyncManager {
   private repository: GomokuRepository;

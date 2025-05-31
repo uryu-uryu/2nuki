@@ -5,7 +5,7 @@
  * 環境変数が不足している場合は、エラーをスローします。
  */
 
-import { logger } from './logger';
+import { logger } from 'src/utils/logger';
 
 // 必須の環境変数の定義
 const REQUIRED_ENV_VARS = {

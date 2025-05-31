@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
-import { gomokuConfig } from './config';
-import { logger } from './utils/logger';
-import { validateEnv } from './utils/envValidator';
+import { gomokuConfig } from 'src/config';
+import { logger } from 'src/utils/logger';
+import { validateEnv } from 'src/utils/envValidator';
 
 // DOMが読み込まれた後にゲームを開始
 document.addEventListener('DOMContentLoaded', () => {

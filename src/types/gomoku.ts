@@ -2,8 +2,8 @@
  * Gomoku 関連の型定義
  */
 
-import type { Gomoku } from './database';
-import type { Player } from './database';
+import type { Gomoku } from 'src/types/database';
+import type { Player } from 'src/types/database';
 
 // ゲームセッション管理用インターフェース
 export interface GameSession {

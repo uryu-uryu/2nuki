@@ -1,7 +1,7 @@
-import { GomokuGameScene } from './scenes/Gomoku/GomokuScene';
-import { MainMenuScene } from './scenes/MainMenu/MainMenuScene';
-import { PlayerSelectScene } from './scenes/PlayerSelect/PlayerSelectScene';
-import { LAYOUT } from './consts/layout';
+import { GomokuGameScene } from 'src/scenes/Gomoku/GomokuScene';
+import { MainMenuScene } from 'src/scenes/MainMenu/MainMenuScene';
+import { PlayerSelectScene } from 'src/scenes/PlayerSelect/PlayerSelectScene';
+import { LAYOUT } from 'src/consts/layout';
 import * as Phaser from 'phaser';
 
 export const gomokuConfig: Phaser.Types.Core.GameConfig = {

@@ -8,12 +8,12 @@
  */
 
 import * as Phaser from 'phaser';
-import { GomokuContainer } from './GomokuContainer';
-import { GomokuBoardRender } from './view/GomokuBoard';
-import { GomokuUI } from './view/GomokuUI';
-import { GomokuSessionController } from './view/GomokuSessionController';
-import type { Gomoku, Player } from '../../types';
-import { logger } from '../../utils/logger';
+import { GomokuContainer } from 'src/scenes/Gomoku/GomokuContainer';
+import { GomokuBoardRender } from 'src/scenes/Gomoku/view/GomokuBoard';
+import { GomokuUI } from 'src/scenes/Gomoku/view/GomokuUI';
+import { GomokuSessionController } from 'src/scenes/Gomoku/view/GomokuSessionController';
+import type { Gomoku, Player } from 'src/types';
+import { logger } from 'src/utils/logger';
 
 export class GomokuGameScene extends Phaser.Scene {
   private gameManager!: GomokuContainer;

@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
-import { SCREEN, PADDING } from '../../consts/layout';
-import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from '../../consts/styles';
+import { SCREEN, PADDING } from 'src/consts/layout';
+import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from 'src/consts/styles';
 
 export class MainMenuScene extends Phaser.Scene {
   constructor() {

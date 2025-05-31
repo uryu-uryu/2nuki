@@ -8,9 +8,9 @@
  */
 
 import * as Phaser from 'phaser';
-import type { Gomoku } from '../../../types';
-import { BOARD, PADDING } from '../../../consts/layout';
-import { COLORS, DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from '../../../consts/styles';
+import type { Gomoku } from 'src/types';
+import { BOARD, PADDING } from 'src/consts/layout';
+import { COLORS, DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from 'src/consts/styles';
 
 export class GomokuUI {
   private scene: Phaser.Scene;
@@ -71,10 +71,10 @@ export class GomokuUI {
   }
 
   setupEventHandlers(handlers: {
-        onCreateGame: () => void;
-        onForfeitGame: () => void;
-        onBack: () => void;
-    }) {
+    onCreateGame: () => void;
+    onForfeitGame: () => void;
+    onBack: () => void;
+  }) {
     this.createGameButton.on('pointerdown', handlers.onCreateGame);
     this.forfeitButton.on('pointerdown', handlers.onForfeitGame);
     this.backButton.on('pointerdown', handlers.onBack);

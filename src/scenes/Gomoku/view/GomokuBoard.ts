@@ -3,8 +3,8 @@
  */
 
 import * as Phaser from 'phaser';
-import { BOARD } from '../../../consts/layout';
-import { COLORS } from '../../../consts/styles';
+import { BOARD } from 'src/consts/layout';
+import { COLORS } from 'src/consts/styles';
 
 export class GomokuBoardRender {
   private scene: Phaser.Scene;
@@ -95,8 +95,8 @@ export class GomokuBoardRender {
     for (let row = 0; row < BOARD.SIZE; row++) {
       for (let col = 0; col < BOARD.SIZE; col++) {
         if (this.stones[row][col]) {
-                    this.stones[row][col]!.destroy();
-                    this.stones[row][col] = null;
+          this.stones[row][col]!.destroy();
+          this.stones[row][col] = null;
         }
       }
     }
@@ -114,8 +114,8 @@ export class GomokuBoardRender {
       const y = pointer.y - BOARD.OFFSET_Y;
 
       if (x >= -BOARD.CELL_SIZE / 2 && y >= -BOARD.CELL_SIZE / 2 &&
-                x <= BOARD.SIZE * BOARD.CELL_SIZE + BOARD.CELL_SIZE / 2 &&
-                y <= BOARD.SIZE * BOARD.CELL_SIZE + BOARD.CELL_SIZE / 2) {
+        x <= BOARD.SIZE * BOARD.CELL_SIZE + BOARD.CELL_SIZE / 2 &&
+        y <= BOARD.SIZE * BOARD.CELL_SIZE + BOARD.CELL_SIZE / 2) {
 
         // 最も近い交点を計算
         const col = Math.round(x / BOARD.CELL_SIZE);

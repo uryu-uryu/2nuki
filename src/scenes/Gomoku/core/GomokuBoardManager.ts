@@ -7,8 +7,8 @@
  * 3. ゲーム状態の検証
  */
 
-import { BOARD_SIZE } from '../../../consts/const';
-import type { Gomoku, Player } from '../../../types';
+import { BOARD_SIZE } from 'src/consts/const';
+import type { Gomoku, Player } from 'src/types';
 
 export class GomokuBoardManager {
   private gameData: Gomoku;

@@ -7,9 +7,9 @@
  * 3. セッション状態の更新
  */
 
-import type { Gomoku } from '../../../types';
-import type { GameSession } from '../../../types/gomoku';
-import { GameEvents } from '../core/GameEvents';
+import type { Gomoku } from 'src/types';
+import type { GameSession } from 'src/types/gomoku';
+import { GameEvents } from 'src/scenes/Gomoku/core/GameEvents';
 
 export class SessionManager {
   private activeSessions: Map<string, GameSession> = new Map();

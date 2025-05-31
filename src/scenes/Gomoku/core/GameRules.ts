@@ -7,7 +7,7 @@
  * 3. ルールに関する定数管理
  */
 
-import { BOARD_SIZE } from '../../../consts/const';
+import { BOARD_SIZE } from 'src/consts/const';
 
 export class GameRules {
   private static readonly WIN_CONDITION = 5; // 勝利に必要な連続した石の数

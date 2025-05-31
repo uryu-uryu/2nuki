@@ -7,13 +7,13 @@
  * 3. ゲーム全体の制御
  */
 
-import type { Gomoku, Player } from '../../types';
-import type { GameManagerEvents, GameUpdateData, DebugInfo } from '../../types/gomoku';
-import { GomokuBoardManager } from './core/GomokuBoardManager';
-import { GameRules } from './core/GameRules';
-import { GameEvents } from './core/GameEvents';
-import { SessionManager } from './online/SessionManager';
-import { SyncManager } from './online/SyncManager';
+import type { Gomoku, Player } from 'src/types';
+import type { GameManagerEvents, GameUpdateData, DebugInfo } from 'src/types/gomoku';
+import { GomokuBoardManager } from 'src/scenes/Gomoku/core/GomokuBoardManager';
+import { GameRules } from 'src/scenes/Gomoku/core/GameRules';
+import { GameEvents } from 'src/scenes/Gomoku/core/GameEvents';
+import { SessionManager } from 'src/scenes/Gomoku/online/SessionManager';
+import { SyncManager } from 'src/scenes/Gomoku/online/SyncManager';
 
 export class GomokuContainer {
   private events: GameEvents;

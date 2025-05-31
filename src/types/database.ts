@@ -42,24 +42,23 @@ export interface GameCreateParams {
 }
 
 export interface GameUpdateParams {
-  row: number;
-  col: number;
-  playerId: string;
+  currentPlayerTurn?: string;
+  boardState?: number[][];
+  isFinished?: boolean;
 }
 
 // データベース操作の結果型
-export interface DatabaseResult<T = unknown> {
-  data: T | null;
-  error: Error | null;
+export interface DatabaseResult<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
 }
 
 // リアルタイム更新のペイロード型
-export interface RealtimePayload {
+export interface RealtimePayload<T> {
+  new: T;
+  old: T;
   eventType: 'INSERT' | 'UPDATE' | 'DELETE';
-  new?: Record<string, unknown>;
-  old?: Record<string, unknown>;
-  schema: string;
-  table: string;
 }
 
 // 五目並べゲーム用の追加型定義

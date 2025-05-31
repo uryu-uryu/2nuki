@@ -1,4 +1,4 @@
-import { LAYOUT } from './layout';
+import { LAYOUT } from 'src/consts/layout';
 
 export const DEFAULT_TEXT_STYLE: Phaser.Types.GameObjects.Text.TextStyle = {
   fontSize: LAYOUT.FONT_SIZE.MEDIUM,

@@ -7,8 +7,8 @@
  * 3. イベントの発火
  */
 
-import type { Gomoku, Player } from '../../../types';
-import type { GameManagerEvents } from '../../../types/gomoku';
+import type { Gomoku, Player } from 'src/types';
+import type { GameManagerEvents } from 'src/types/gomoku';
 
 export class GameEvents {
   private eventHandlers: Partial<GameManagerEvents> = {};
