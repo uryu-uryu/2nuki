@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 export default [
   js.configs.recommended,
@@ -20,7 +21,8 @@ export default [
       }
     },
     plugins: {
-      '@typescript-eslint': tsPlugin
+      '@typescript-eslint': tsPlugin,
+      'unused-imports': unusedImports
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
@@ -30,11 +32,13 @@ export default [
       'quotes': ['error', 'single'],
       // 末尾セミコロン必須
       'semi': ['error', 'always'],
-      // 未使用の変数を警告に
-      '@typescript-eslint/no-unused-vars': ['warn', {
+      // 未使用の変数とインポートを自動修正
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': ['warn', {
         'varsIgnorePattern': '^_',
         'argsIgnorePattern': '^_'
       }],
+      '@typescript-eslint/no-unused-vars': 'off',
       'no-unused-vars': 'off',
       // anyの使用を警告に
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -47,7 +51,14 @@ export default [
           selector: 'CallExpression[callee.object.name="console"]',
           message: 'console.* の代わりに logger.* を使用してください。例: logger.info(), logger.error(), logger.debug()'
         }
-      ]
+      ],
+      // 相対パスでのimportを禁止し、絶対パスを強制
+      'no-restricted-imports': ['error', {
+        patterns: [{
+          group: ['../*', './*'],
+          message: '相対パスでのimportは禁止されています。代わりに絶対パス（src/からのパス）を使用してください。'
+        }]
+      }]
     }
   },
   // utils/logger.ts ファイルではconsole関数の使用を許可
