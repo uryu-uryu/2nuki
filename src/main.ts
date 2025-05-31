@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import { gomokuConfig } from './config';
+import { logger } from './utils/logger';
 
 // DOMが読み込まれた後にゲームを開始
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,5 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     game.destroy(true);
   });
 
-  console.log('五目並べゲームが開始されました！');
+  // 開発環境用の情報ログに変更
+  logger.info('五目並べゲームが開始されました！');
 });

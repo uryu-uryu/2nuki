@@ -11,6 +11,7 @@ import type {
   Player
 } from '../../types';
 import { BOARD_SIZE } from '../../consts/const';
+import { logger } from '../../utils/logger';
 
 // Supabaseの設定（環境変数から取得）
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
@@ -42,13 +43,13 @@ export class GomokuRepository {
         .single();
 
       if (error) {
-        console.error('ゲーム作成エラー:', error);
+        logger.error('ゲーム作成エラー:', error);
         return null;
       }
 
       return data as Gomoku;
     } catch (error) {
-      console.error('ゲーム作成例外:', error);
+      logger.error('ゲーム作成例外:', error);
       return null;
     }
   }
@@ -63,13 +64,13 @@ export class GomokuRepository {
         .single();
 
       if (error) {
-        console.error('ゲーム取得エラー:', error);
+        logger.error('ゲーム取得エラー:', error);
         return null;
       }
 
       return data as Gomoku;
     } catch (error) {
-      console.error('ゲーム取得例外:', error);
+      logger.error('ゲーム取得例外:', error);
       return null;
     }
   }
@@ -85,13 +86,13 @@ export class GomokuRepository {
         .order(GOMOKU_COLUMNS.UPDATED_AT, { ascending: false });
 
       if (error) {
-        console.error('プレイヤーゲーム取得エラー:', error);
+        logger.error('プレイヤーゲーム取得エラー:', error);
         return [];
       }
 
       return data as Gomoku[];
     } catch (error) {
-      console.error('プレイヤーゲーム取得例外:', error);
+      logger.error('プレイヤーゲーム取得例外:', error);
       return [];
     }
   }
@@ -107,13 +108,13 @@ export class GomokuRepository {
         .single();
 
       if (error) {
-        console.error('ゲーム状態更新エラー:', error);
+        logger.error('ゲーム状態更新エラー:', error);
         return null;
       }
 
       return data as Gomoku;
     } catch (error) {
-      console.error('ゲーム状態更新例外:', error);
+      logger.error('ゲーム状態更新例外:', error);
       return null;
     }
   }
@@ -131,7 +132,7 @@ export class GomokuRepository {
           filter: `${GOMOKU_COLUMNS.ID}=eq.${gameId}`
         },
         (payload) => {
-          console.log('五目並べリアルタイム更新:', payload);
+          logger.debug('五目並べリアルタイム更新:', payload);
           if (payload.new && typeof payload.new === 'object') {
             callback(payload.new as Gomoku);
           }

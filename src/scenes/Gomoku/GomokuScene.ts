@@ -13,6 +13,7 @@ import { GomokuBoardRender } from './view/GomokuBoard';
 import { GomokuUI } from './view/GomokuUI';
 import { GomokuSessionController } from './view/GomokuSessionController';
 import type { Gomoku, Player } from '../../types';
+import { logger } from '../../utils/logger';
 
 export class GomokuGameScene extends Phaser.Scene {
   private gameManager!: GomokuContainer;
@@ -32,26 +33,26 @@ export class GomokuGameScene extends Phaser.Scene {
 
   private setupGameManagerEvents() {
     this.gameManager.on('gameCreated', (game: Gomoku) => {
-      console.log('ゲームが作成されました:', game.id);
+      logger.info('ゲームが作成されました:', game.id);
       this.state.setGameId(game.id);
       this.updateDisplay();
       this.updateBoard();
     });
 
     this.gameManager.on('gameUpdated', (game: Gomoku) => {
-      console.log('ゲームが更新されました:', game.id);
+      logger.info('ゲームが更新されました:', game.id);
       this.updateDisplay();
       this.updateBoard();
     });
 
     this.gameManager.on('gameFinished', (game: Gomoku, winner: Player | null) => {
-      console.log('ゲームが終了しました:', game.id, '勝者:', winner);
+      logger.info('ゲームが終了しました:', game.id, '勝者:', winner);
       this.updateDisplay();
       this.showGameResult(winner);
     });
 
     this.gameManager.on('error', (error: string) => {
-      console.error('ゲームエラー:', error);
+      logger.error('ゲームエラー:', error);
       this.showError(error);
     });
   }
@@ -227,11 +228,11 @@ export class GomokuGameScene extends Phaser.Scene {
       message += '残念！\n相手の勝利です';
     }
 
-    console.log(message);
+    logger.debug('ゲームメッセージ:', message);
   }
 
   private showError(error: string) {
-    console.error('エラー:', error);
+    logger.error('エラー:', error);
   }
 
   destroy() {

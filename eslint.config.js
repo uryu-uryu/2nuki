@@ -36,10 +36,26 @@ export default [
         'argsIgnorePattern': '^_'
       }],
       'no-unused-vars': 'off',
-      // console.logは開発中は許可
-      'no-console': 'off',
       // anyの使用を警告に
-      '@typescript-eslint/no-explicit-any': 'warn'
+      '@typescript-eslint/no-explicit-any': 'warn',
+      // console関数の使用を制限（修正版）
+      'no-console': ['warn'],
+      // loggerユーティリティの使用を推奨するカスタムルール
+      'no-restricted-syntax': [
+        'warn',
+        {
+          selector: 'CallExpression[callee.object.name="console"]',
+          message: 'console.* の代わりに logger.* を使用してください。例: logger.info(), logger.error(), logger.debug()'
+        }
+      ]
+    }
+  },
+  // utils/logger.ts ファイルではconsole関数の使用を許可
+  {
+    files: ['**/utils/logger.ts'],
+    rules: {
+      'no-console': 'off',
+      'no-restricted-syntax': 'off'
     }
   }
 ]; 
