@@ -1,5 +1,7 @@
 /**
  * 五目並べのゲームシーン
+ * this.gameContainer.on("hoge") でイベントを登録し、
+ * GameEvents で 実装している this.gameContainer.emit("hoge") でイベントを発火している。
  * 
  * 責務：
  * - シーンのライフサイクル管理
@@ -14,9 +16,10 @@ import { GomokuUI } from 'src/scenes/Gomoku/view/GomokuUI';
 import { GomokuSessionController } from 'src/scenes/Gomoku/view/GomokuSessionController';
 import type { Gomoku, Player } from 'src/types';
 import { logger } from 'src/utils/logger';
+import { GameEventNames } from 'src/scenes/Gomoku/core/GameEventNames';
 
 export class GomokuGameScene extends Phaser.Scene {
-  private gameManager!: GomokuContainer;
+  private gameContainer!: GomokuContainer;
   private gameBoard!: GomokuBoardRender;
   private ui!: GomokuUI;
   private state!: GomokuSessionController;
@@ -27,31 +30,31 @@ export class GomokuGameScene extends Phaser.Scene {
 
   init(data: { playerId: string }) {
     this.state = new GomokuSessionController();
-    this.gameManager = new GomokuContainer(data.playerId);
+    this.gameContainer = new GomokuContainer(data.playerId);
     this.setupGameManagerEvents();
   }
 
   private setupGameManagerEvents() {
-    this.gameManager.on('gameCreated', (game: Gomoku) => {
+    this.gameContainer.on(GameEventNames.GAME_CREATED, (game: Gomoku) => {
       logger.info('ゲームが作成されました:', game.id);
       this.state.setGameId(game.id);
       this.updateDisplay();
       this.updateBoard();
     });
 
-    this.gameManager.on('gameUpdated', (game: Gomoku) => {
+    this.gameContainer.on(GameEventNames.GAME_UPDATED, (game: Gomoku) => {
       logger.info('ゲームが更新されました:', game.id);
       this.updateDisplay();
       this.updateBoard();
     });
 
-    this.gameManager.on('gameFinished', (game: Gomoku, winner: Player | null) => {
+    this.gameContainer.on(GameEventNames.GAME_FINISHED, (game: Gomoku, winner: Player | null) => {
       logger.info('ゲームが終了しました:', game.id, '勝者:', winner);
       this.updateDisplay();
       this.showGameResult(winner);
     });
 
-    this.gameManager.on('error', (error: string) => {
+    this.gameContainer.on(GameEventNames.ERROR, (error: string) => {
       logger.error('ゲームエラー:', error);
       this.showError(error);
     });
@@ -71,7 +74,7 @@ export class GomokuGameScene extends Phaser.Scene {
     this.gameBoard.setupClickHandler((row, col) => {
       const gameId = this.state.getGameId();
       if (gameId && !this.state.isGameLoading() &&
-        this.gameManager.canPlaceStone(gameId, row, col)) {
+        this.gameContainer.canPlaceStone(gameId, row, col)) {
         this.makeMove(row, col);
       }
     });
@@ -87,7 +90,7 @@ export class GomokuGameScene extends Phaser.Scene {
     this.state.setLoading(true);
     this.updateDisplay();
 
-    const games = await this.gameManager.loadPlayerGames();
+    const games = await this.gameContainer.loadPlayerGames();
 
     // アクティブなゲームがあれば最初のものを選択
     if (games.length > 0) {
@@ -110,7 +113,7 @@ export class GomokuGameScene extends Phaser.Scene {
 
     try {
       const opponentId = '22222222-2222-2222-2222-222222222222';
-      await this.gameManager.createGame(opponentId, true);
+      await this.gameContainer.createGame(opponentId, true);
     } finally {
       this.state.setLoading(false);
       this.updateDisplay();
@@ -125,7 +128,7 @@ export class GomokuGameScene extends Phaser.Scene {
     this.updateDisplay();
 
     try {
-      await this.gameManager.makeMove(gameId, row, col);
+      await this.gameContainer.makeMove(gameId, row, col);
     } finally {
       this.state.setLoading(false);
       this.updateDisplay();
@@ -140,7 +143,7 @@ export class GomokuGameScene extends Phaser.Scene {
     this.updateDisplay();
 
     try {
-      await this.gameManager.forfeitGame(gameId);
+      await this.gameContainer.forfeitGame(gameId);
     } finally {
       this.state.setLoading(false);
       this.updateDisplay();
@@ -151,7 +154,7 @@ export class GomokuGameScene extends Phaser.Scene {
     const gameId = this.state.getGameId();
     if (!gameId) return;
 
-    const game = this.gameManager.getGame(gameId);
+    const game = this.gameContainer.getGame(gameId);
     if (!game) return;
 
     this.gameBoard.updateBoard(game.board_state);
@@ -161,7 +164,7 @@ export class GomokuGameScene extends Phaser.Scene {
    * デバッグ情報の表示を更新する
    */
   private updateDebugDisplay() {
-    const debugInfo = this.gameManager.getDebugInfo();
+    const debugInfo = this.gameContainer.getDebugInfo();
     const activeSessions = Object.values(debugInfo.activeSessions).filter(session => session.isActive).length;
     this.ui.updateDebugInfo(debugInfo.playerId, activeSessions);
   }
@@ -170,7 +173,7 @@ export class GomokuGameScene extends Phaser.Scene {
    * ゲームが存在しない場合の表示を更新する
    */
   private updateNoGameDisplay() {
-    this.ui.updateForNoGame(this.gameManager.getPlayerId(), this.state.isGameLoading());
+    this.ui.updateForNoGame(this.gameContainer.getPlayerId(), this.state.isGameLoading());
   }
 
   /**
@@ -178,15 +181,15 @@ export class GomokuGameScene extends Phaser.Scene {
    * @param gameId 表示対象のゲームID
    */
   private updateActiveGameDisplay(gameId: string) {
-    const game = this.gameManager.getGame(gameId);
+    const game = this.gameContainer.getGame(gameId);
     if (!game) return;
 
-    const playerColor = this.gameManager.getPlayerColor(gameId);
+    const playerColor = this.gameContainer.getPlayerColor(gameId);
     if (!playerColor) return;
 
-    const isGameFinished = this.gameManager.isGameFinished(gameId);
-    const winner = this.gameManager.getWinner(gameId);
-    const isPlayerTurn = this.gameManager.isPlayerTurn(gameId);
+    const isGameFinished = this.gameContainer.isGameFinished(gameId);
+    const winner = this.gameContainer.getWinner(gameId);
+    const isPlayerTurn = this.gameContainer.isPlayerTurn(gameId);
 
     // ゲーム情報の更新
     this.ui.updateGameInfo(game, playerColor, isGameFinished, winner, this.state.isGameLoading());
@@ -217,7 +220,7 @@ export class GomokuGameScene extends Phaser.Scene {
     const gameId = this.state.getGameId();
     if (!gameId) return;
 
-    const playerColor = this.gameManager.getPlayerColor(gameId);
+    const playerColor = this.gameContainer.getPlayerColor(gameId);
     let message = 'ゲーム終了！\n';
 
     if (winner === null) {
@@ -236,7 +239,7 @@ export class GomokuGameScene extends Phaser.Scene {
   }
 
   destroy() {
-    this.gameManager.cleanup();
+    this.gameContainer.cleanup();
     this.gameBoard.destroy();
     this.ui.destroy();
     this.state.reset();

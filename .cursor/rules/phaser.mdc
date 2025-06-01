@@ -23,8 +23,9 @@ alwaysApply: true
 - コードの意図・背景などのコメントを日本語で積極的に入れること。
 - 関数には DocString を記載すること
 - ログの文言は日本語とすること
-- console.log 等は使用せずに必ずloggerを使用すること
+- console.log等は使用せずに必ずloggerを使用すること
 - container-Presenter パターンを意識し、UI とロジックを分けて実装すること
+- 相対importは禁止
 
 
 ■ directory構成

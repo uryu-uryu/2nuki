@@ -9,6 +9,7 @@
 
 import type { Gomoku, Player } from 'src/types';
 import type { GameManagerEvents } from 'src/types/gomoku';
+import { GameEventNames } from 'src/scenes/Gomoku/core/GameEventNames';
 
 export class GameEvents {
   private eventHandlers: Partial<GameManagerEvents> = {};
@@ -29,22 +30,22 @@ export class GameEvents {
 
   // ゲーム作成イベント
   emitGameCreated(game: Gomoku): void {
-    this.emit('gameCreated', game);
+    this.emit(GameEventNames.GAME_CREATED, game);
   }
 
   // ゲーム更新イベント
   emitGameUpdated(game: Gomoku): void {
-    this.emit('gameUpdated', game);
+    this.emit(GameEventNames.GAME_UPDATED, game);
   }
 
   // ゲーム終了イベント
   emitGameFinished(game: Gomoku, winner: Player | null): void {
-    this.emit('gameFinished', game, winner);
+    this.emit(GameEventNames.GAME_FINISHED, game, winner);
   }
 
   // エラーイベント
   emitError(message: string): void {
-    this.emit('error', message);
+    this.emit(GameEventNames.ERROR, message);
   }
 
   // イベントハンドラーのクリーンアップ
