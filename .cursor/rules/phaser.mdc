@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 以下の指示に従って、効率的かつ正確にタスクを遂行してください。
 
@@ -12,16 +12,20 @@ alwaysApply: false
 - Typescript
 - Phaser.js
 - Supabase
+- Vite
 
 ■ 実装時の注意点
 - 常に既存コードの設計や記法を参考にすること
+- 各ファイルの先頭に、該当ファイルのまとめ(目的や概要、責務)を必ず示すこと
 - /docs 内の仕様を参照すること
 - クラスのmain関数が長くなる場合、適切な粒度でメソッドを分割すること
 - 書籍「リーダブルコード」のようなベストプラクティスを常に適用してください
 - コードの意図・背景などのコメントを日本語で積極的に入れること。
 - 関数には DocString を記載すること
-- デバッグ時に表示する文言は日本語とすること
+- ログの文言は日本語とすること
+- console.log等は使用せずに必ずloggerを使用すること
 - container-Presenter パターンを意識し、UI とロジックを分けて実装すること
+- 相対importは禁止
 
 
 ■ directory構成
@@ -31,9 +35,12 @@ alwaysApply: false
 │   ├── scenes/                # ゲームやアプリのシーン管理
 │   │   └── Game/              # ゲーム本体のロジック・状態管理
 │   │       └── components/    # ゲーム内のUI部品
-│   │       └── GameStore      # ゲーム状態管理
-│   │       └── Gamecontroller # ゲームロジック制御
-│   ├── services/              # 外部サービス連携（例: Supabase）
+│   │       └── view/          # UI 関連の補助関数など
+│   │       └── core/          # ゲームのコアロジック
+│   │       └── online/        # ゲームのオンライン処理に関するロジック
+│   │       └── GameScene      # ゲームのシーン管理
+│   │       └── GameContainer  # ゲームロジック制御
+│   ├── repository/            # DB 連携（例: Supabase）
 │   │   └── supabase/          # Supabase用の設定・API
 │   ├── types/                 # 型定義（TypeScript用）
 │   └── main.ts                # エントリーポイント

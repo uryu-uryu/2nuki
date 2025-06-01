@@ -1,14 +1,26 @@
--- game_stateテーブルを作成
-CREATE TABLE game_state (
-  id BIGINT PRIMARY KEY DEFAULT 1,
-  score INTEGER NOT NULL DEFAULT 0,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- uuid-ossp拡張を有効化
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- 五目並べの盤面テーブル
+CREATE TABLE gomoku (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  black_player_id UUID NOT NULL,
+  white_player_id UUID NOT NULL,
+  current_player_turn UUID NOT NULL,
+  winner_id UUID,
+  board_state JSONB NOT NULL, -- 2次元配列をJSONで保存
+  is_finished BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  finished_at TIMESTAMP WITH TIME ZONE,
+  CONSTRAINT different_players CHECK (black_player_id != white_player_id),
+  CONSTRAINT valid_turn CHECK (
+    current_player_turn = black_player_id OR current_player_turn = white_player_id
+  ),
+  CONSTRAINT valid_winner CHECK (
+    winner_id IS NULL OR winner_id = black_player_id OR winner_id = white_player_id
+  )
 );
 
--- 初期データを挿入
-INSERT INTO game_state (id, score, updated_at) 
-VALUES (1, 0, NOW())
-ON CONFLICT (id) DO NOTHING;
-
 -- リアルタイム機能を有効化
-ALTER PUBLICATION supabase_realtime ADD TABLE game_state; 
+ALTER PUBLICATION supabase_realtime ADD TABLE gomoku; 

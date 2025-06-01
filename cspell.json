@@ -1,0 +1,17 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "words": [
+        "gomoku",
+        "languagedetector",
+        "supabase",
+        "phaser",
+        "realtime",
+        "postgrest",
+        "vite"
+    ],
+    "ignorePaths": [
+        "node_modules/**",
+        "dist/**"
+    ]
+}
