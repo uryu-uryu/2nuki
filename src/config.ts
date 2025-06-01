@@ -1,6 +1,8 @@
 import { GomokuGameScene } from 'src/scenes/Gomoku/GomokuScene';
 import { MainMenuScene } from 'src/scenes/MainMenu/MainMenuScene';
 import { PlayerSelectScene } from 'src/scenes/PlayerSelect/PlayerSelectScene';
+import { Boot } from 'src/scenes/Boot';
+import { Preloader } from 'src/scenes/Preloader';
 import { LAYOUT } from 'src/consts/layout';
 import * as Phaser from 'phaser';
 
@@ -9,7 +11,7 @@ export const gomokuConfig: Phaser.Types.Core.GameConfig = {
   width: LAYOUT.GAME.WIDTH,
   height: LAYOUT.GAME.HEIGHT,
   backgroundColor: LAYOUT.BACKGROUND_COLOR,
-  scene: [MainMenuScene, PlayerSelectScene, GomokuGameScene],
+  scene: [Boot, Preloader, MainMenuScene, PlayerSelectScene, GomokuGameScene],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,

@@ -1,8 +1,12 @@
+import { Buffer } from 'buffer';
 import * as Phaser from 'phaser';
 import { gomokuConfig } from 'src/config';
 import { logger } from 'src/utils/logger';
 import { validateEnv } from 'src/utils/envValidator';
 import i18next from 'src/i18n/config';
+
+// グローバルにBufferを定義
+window.Buffer = Buffer;
 
 // DOMが読み込まれた後にゲームを開始
 document.addEventListener('DOMContentLoaded', async () => {
