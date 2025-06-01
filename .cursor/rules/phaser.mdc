@@ -12,6 +12,7 @@ alwaysApply: true
 - Typescript
 - Phaser.js
 - Supabase
+- PlayFab
 - Vite
 
 ■ 実装時の注意点
@@ -56,3 +57,5 @@ alwaysApply: true
 ├── tsconfig.json              # TypeScript設定
 ├── vite.config.ts             # Viteビルド設定
 └── README.md                  # プロジェクト説明
+
+

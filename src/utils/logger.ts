@@ -12,9 +12,9 @@ type LogArgs = string | number | boolean | object | null | undefined | Error | u
 // ロガーの実装
 export const logger = {
   /**
-     * 情報ログを出力します
-     * 開発環境でのみ出力されます
-     */
+   * 情報ログを出力します
+   * 開発環境でのみ出力されます
+   */
   info: (...args: LogArgs[]): void => {
     if (isDevelopment) {
       console.info(...args);
@@ -22,17 +22,17 @@ export const logger = {
   },
 
   /**
-     * エラーログを出力します
-     * 全環境で出力されます
-     */
+   * エラーログを出力します
+   * 全環境で出力されます
+   */
   error: (...args: LogArgs[]): void => {
     console.error(...args);
   },
 
   /**
-     * デバッグログを出力します
-     * 開発環境でのみ出力されます
-     */
+   * デバッグログを出力します
+   * 開発環境でのみ出力されます
+   */
   debug: (...args: LogArgs[]): void => {
     if (isDevelopment) {
       console.debug(...args);
