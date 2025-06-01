@@ -9,7 +9,7 @@
 import type { LoginResult, LoginWithCustomIDRequest } from '@/types/playfab';
 import { logger } from '@/utils/logger';
 
- 
+
 declare const PlayFab: {
     settings: {
         titleId: string;
@@ -75,9 +75,9 @@ export class PlayFabAuth {
   }
 
   /**
-       * シングルトンインスタンスを取得
-       * @returns PlayFabAuthのインスタンス
-       */
+         * シングルトンインスタンスを取得
+         * @returns PlayFabAuthのインスタンス
+         */
   public static getInstance(): PlayFabAuth {
     if (!PlayFabAuth.instance) {
       PlayFabAuth.instance = new PlayFabAuth();
@@ -86,34 +86,34 @@ export class PlayFabAuth {
   }
 
   /**
-       * ログイン情報を取得
-       * @returns ログイン結果情報。未ログインの場合はnull
-       */
+         * ログイン情報を取得
+         * @returns ログイン結果情報。未ログインの場合はnull
+         */
   public getLoginInfo(): LoginResult | null {
     return this.loginResult;
   }
 
   /**
-       * プレイヤーIDを取得
-       * @returns プレイヤーID。未ログインの場合はnull
-       */
+         * プレイヤーIDを取得
+         * @returns プレイヤーID。未ログインの場合はnull
+         */
   public getPlayerId(): string | null {
     return this.loginResult?.PlayFabId ?? null;
   }
 
   /**
-       * ログイン済みかどうかを確認
-       * @returns ログイン済みの場合はtrue
-       */
+         * ログイン済みかどうかを確認
+         * @returns ログイン済みの場合はtrue
+         */
   public isLoggedIn(): boolean {
     return this.loginResult !== null;
   }
 
   /**
-       * 匿名ログインを実行
-       * LocalStorageに保存されたIDがある場合はそれを使用
-       * @returns ログイン結果のPromise
-       */
+         * 匿名ログインを実行
+         * LocalStorageに保存されたIDがある場合はそれを使用
+         * @returns ログイン結果のPromise
+         */
   public async loginAnonymously(): Promise<LoginResult> {
     try {
       // SDKの初期化を待つ
@@ -159,9 +159,9 @@ export class PlayFabAuth {
   }
 
   /**
-       * PlayFabクライアントの初期化
-       * @returns Promise<void>
-       */
+         * PlayFabクライアントの初期化
+         * @returns Promise<void>
+         */
   private async initialize(): Promise<void> {
     if (this.isInitialized) {
       return;
@@ -186,10 +186,10 @@ export class PlayFabAuth {
   }
 
   /**
-       * LocalStorageからCustomIDを取得
-       * 存在しない場合は新規生成して保存
-       * @returns CustomID
-       */
+         * LocalStorageからCustomIDを取得
+         * 存在しない場合は新規生成して保存
+         * @returns CustomID
+         */
   private getOrCreateCustomId(): string {
     // TODO: 環境 (ブラウザ / iOS など)の違いを吸収して適切なstorage を使用できるように
     const storedId = window.localStorage.getItem(STORAGE_KEY);

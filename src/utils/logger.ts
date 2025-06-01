@@ -4,7 +4,7 @@
  */
 
 // 開発環境かどうかを判定
-const isDevelopment = import.meta.env.MODE === 'dev';
+const isDevelopment = import.meta.env.VITE_MODE === 'dev';
 
 // ログの引数の型定義
 type LogArgs = string | number | boolean | object | null | undefined | Error | unknown;
@@ -17,7 +17,7 @@ export const logger = {
    */
   info: (...args: LogArgs[]): void => {
     if (isDevelopment) {
-      console.info(...args);
+      console.info('[INFO]', ...args);
     }
   },
 
@@ -26,7 +26,7 @@ export const logger = {
    * 全環境で出力されます
    */
   error: (...args: LogArgs[]): void => {
-    console.error(...args);
+    console.error('[ERROR]', ...args);
   },
 
   /**
@@ -35,11 +35,15 @@ export const logger = {
    */
   debug: (...args: LogArgs[]): void => {
     if (isDevelopment) {
-      console.debug(...args);
+      console.debug('[DEBUG]', ...args);
     }
   },
 
+  /**
+   * 警告ログを出力します
+   * 全環境で出力されます
+   */
   warn: (...args: LogArgs[]): void => {
-    console.warn(...args);
+    console.warn('[WARN]', ...args);
   }
 }; 
