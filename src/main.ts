@@ -2,12 +2,17 @@ import * as Phaser from 'phaser';
 import { gomokuConfig } from 'src/config';
 import { logger } from 'src/utils/logger';
 import { validateEnv } from 'src/utils/envValidator';
+import i18next from 'src/i18n/config';
 
 // DOMが読み込まれた後にゲームを開始
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   try {
     // 環境変数のバリデーション
     validateEnv();
+
+    // i18nextの初期化を待機
+    await i18next.init();
+    logger.info(`言語が設定されました: ${i18next.language}`);
 
     // ゲームコンテナを取得または作成
     let gameContainer = document.getElementById('game-container');

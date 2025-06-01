@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { SCREEN, PADDING } from 'src/consts/layout';
 import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from 'src/consts/styles';
 import { SCENE_KEYS } from 'src/consts/scenes';
+import i18next from 'src/i18n/config';
 
 export class PlayerSelectScene extends Phaser.Scene {
   constructor() {
@@ -13,13 +14,13 @@ export class PlayerSelectScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(COLORS.BACKGROUND);
 
     // タイトルテキスト
-    this.add.text(SCREEN.CENTER_X, 100, 'プレイヤー選択', {
+    this.add.text(SCREEN.CENTER_X, 100, i18next.t('playerSelect.title'), {
       ...LARGE_TEXT_STYLE,
       color: COLORS.TEXT.PRIMARY
     }).setOrigin(0.5);
 
     // プレイヤー1のボタン
-    const player1Button = this.add.text(SCREEN.CENTER_X, 200, 'プレイヤー1として開始', {
+    const player1Button = this.add.text(SCREEN.CENTER_X, 200, i18next.t('playerSelect.player1'), {
       ...DEFAULT_TEXT_STYLE,
       color: COLORS.TEXT.WHITE,
       backgroundColor: COLORS.BUTTON.PRIMARY,
@@ -28,7 +29,7 @@ export class PlayerSelectScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true });
 
     // プレイヤー2のボタン
-    const player2Button = this.add.text(SCREEN.CENTER_X, 300, 'プレイヤー2として開始', {
+    const player2Button = this.add.text(SCREEN.CENTER_X, 300, i18next.t('playerSelect.player2'), {
       ...DEFAULT_TEXT_STYLE,
       color: COLORS.TEXT.WHITE,
       backgroundColor: COLORS.BUTTON.SECONDARY,
@@ -37,7 +38,7 @@ export class PlayerSelectScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true });
 
     // 説明テキスト
-    this.add.text(SCREEN.CENTER_X, 400, 'ローカルテスト用：\n別のタブで異なるプレイヤーを選択してください', {
+    this.add.text(SCREEN.CENTER_X, 400, i18next.t('playerSelect.description'), {
       ...DEFAULT_TEXT_STYLE,
       color: COLORS.TEXT.SECONDARY,
       align: 'center'

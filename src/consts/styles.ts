@@ -35,7 +35,8 @@ export const COLORS = {
   TEXT: {
     PRIMARY: '#000000',
     SECONDARY: '#666666',
-    WHITE: '#FFFFFF'
+    WHITE: '#FFFFFF',
+    DANGER: '#f44336'
   },
   BUTTON: {
     PRIMARY: '#4CAF50',

@@ -18,6 +18,7 @@ import type { Gomoku, Player } from 'src/types';
 import { logger } from 'src/utils/logger';
 import { GameEventNames } from 'src/scenes/Gomoku/core/GameEventNames';
 import { SCENE_KEYS } from 'src/consts/scenes';
+import i18next from 'src/i18n/config';
 
 export class GomokuGameScene extends Phaser.Scene {
   private gameContainer!: GomokuContainer;
@@ -37,26 +38,26 @@ export class GomokuGameScene extends Phaser.Scene {
 
   private setupGameManagerEvents() {
     this.gameContainer.on(GameEventNames.GAME_CREATED, (game: Gomoku) => {
-      logger.info('ゲームが作成されました:', game.id);
+      logger.info(i18next.t('gamePlay.newGame'), game.id);
       this.state.setGameId(game.id);
       this.updateDisplay();
       this.updateBoard();
     });
 
     this.gameContainer.on(GameEventNames.GAME_UPDATED, (game: Gomoku) => {
-      logger.info('ゲームが更新されました:', game.id);
+      logger.info(i18next.t('gamePlay.turn', { player: game.current_player_turn }), game.id);
       this.updateDisplay();
       this.updateBoard();
     });
 
     this.gameContainer.on(GameEventNames.GAME_FINISHED, (game: Gomoku, winner: Player | null) => {
-      logger.info('ゲームが終了しました:', game.id, '勝者:', winner);
+      logger.info(i18next.t('gamePlay.gameFinished'), game.id, i18next.t('gamePlay.winner'), winner);
       this.updateDisplay();
       this.showGameResult(winner);
     });
 
     this.gameContainer.on(GameEventNames.ERROR, (error: string) => {
-      logger.error('ゲームエラー:', error);
+      logger.error(i18next.t('gamePlay.error'), error);
       this.showError(error);
     });
   }
@@ -193,7 +194,19 @@ export class GomokuGameScene extends Phaser.Scene {
     const isPlayerTurn = this.gameContainer.isPlayerTurn(gameId);
 
     // ゲーム情報の更新
-    this.ui.updateGameInfo(game, playerColor, isGameFinished, winner, this.state.isGameLoading());
+    this.ui.updateGameInfo(
+      game,
+      playerColor,
+      isGameFinished,
+      winner,
+      this.state.isGameLoading(),
+      {
+        loading: i18next.t('gamePlay.loading'),
+        yourTurn: i18next.t('gamePlay.yourTurn'),
+        opponentTurn: i18next.t('gamePlay.opponentTurn'),
+        waitingForOpponent: i18next.t('gamePlay.waitingForOpponent')
+      }
+    );
     this.ui.updateGameStatus(isGameFinished, isPlayerTurn, this.state.isGameLoading());
     this.ui.updateButtonVisibility(isGameFinished, this.state.isGameLoading());
   }
@@ -218,25 +231,15 @@ export class GomokuGameScene extends Phaser.Scene {
   }
 
   private showGameResult(winner: Player | null) {
-    const gameId = this.state.getGameId();
-    if (!gameId) return;
-
-    const playerColor = this.gameContainer.getPlayerColor(gameId);
-    let message = 'ゲーム終了！\n';
-
-    if (winner === null) {
-      message += '引き分けです';
-    } else if (winner === playerColor) {
-      message += 'おめでとうございます！\nあなたの勝利です！';
-    } else {
-      message += '残念！\n相手の勝利です';
-    }
-
-    logger.debug('ゲームメッセージ:', message);
+    const message = winner
+      ? i18next.t('gamePlay.win')
+      : i18next.t('gamePlay.draw');
+    this.ui.showGameResult(message);
   }
 
   private showError(error: string) {
-    logger.error('エラー:', error);
+    logger.error(error);
+    this.ui.showError(i18next.t('gamePlay.error'));
   }
 
   destroy() {

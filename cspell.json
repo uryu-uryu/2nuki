@@ -3,6 +3,7 @@
     "language": "en",
     "words": [
         "gomoku",
+        "languagedetector",
         "supabase",
         "phaser",
         "realtime",

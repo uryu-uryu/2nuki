@@ -11,6 +11,14 @@ import * as Phaser from 'phaser';
 import type { Gomoku } from 'src/types';
 import { BOARD, PADDING } from 'src/consts/layout';
 import { COLORS, DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from 'src/consts/styles';
+import i18next from 'src/i18n/config';
+
+interface GameInfoTexts {
+  loading: string;
+  yourTurn: string;
+  opponentTurn: string;
+  waitingForOpponent: string;
+}
 
 export class GomokuUI {
   private scene: Phaser.Scene;
@@ -20,6 +28,7 @@ export class GomokuUI {
   private forfeitButton!: Phaser.GameObjects.Text;
   private debugText!: Phaser.GameObjects.Text;
   private backButton!: Phaser.GameObjects.Text;
+  private errorText!: Phaser.GameObjects.Text;
 
   constructor(scene: Phaser.Scene) {
     this.scene = scene;
@@ -40,20 +49,30 @@ export class GomokuUI {
     });
 
     // ゲーム作成ボタン
-    this.createGameButton = this.scene.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50, BOARD.OFFSET_Y + 200, 'ゲーム作成', {
-      ...DEFAULT_TEXT_STYLE,
-      color: COLORS.TEXT.WHITE,
-      backgroundColor: COLORS.BUTTON.PRIMARY,
-      padding: PADDING.SMALL
-    }).setInteractive({ useHandCursor: true });
+    this.createGameButton = this.scene.add.text(
+      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50,
+      BOARD.OFFSET_Y + 200,
+      i18next.t('gamePlay.newGame'),
+      {
+        ...DEFAULT_TEXT_STYLE,
+        color: COLORS.TEXT.WHITE,
+        backgroundColor: COLORS.BUTTON.PRIMARY,
+        padding: PADDING.SMALL
+      }
+    ).setInteractive({ useHandCursor: true });
 
     // ゲーム放棄ボタン
-    this.forfeitButton = this.scene.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50, BOARD.OFFSET_Y + 250, 'ゲーム放棄', {
-      ...DEFAULT_TEXT_STYLE,
-      color: COLORS.TEXT.WHITE,
-      backgroundColor: COLORS.BUTTON.DANGER,
-      padding: PADDING.SMALL
-    }).setInteractive({ useHandCursor: true }).setVisible(false);
+    this.forfeitButton = this.scene.add.text(
+      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50,
+      BOARD.OFFSET_Y + 250,
+      i18next.t('gamePlay.forfeit'),
+      {
+        ...DEFAULT_TEXT_STYLE,
+        color: COLORS.TEXT.WHITE,
+        backgroundColor: COLORS.BUTTON.DANGER,
+        padding: PADDING.SMALL
+      }
+    ).setInteractive({ useHandCursor: true }).setVisible(false);
 
     // デバッグ情報テキスト
     this.debugText = this.scene.add.text(10, 10, '', {
@@ -62,12 +81,23 @@ export class GomokuUI {
     });
 
     // 戻るボタン
-    this.backButton = this.scene.add.text(10, 10, '戻る', {
+    this.backButton = this.scene.add.text(10, 10, i18next.t('playerSelect.back'), {
       ...DEFAULT_TEXT_STYLE,
       color: COLORS.TEXT.WHITE,
       backgroundColor: COLORS.BUTTON.PRIMARY,
       padding: PADDING.SMALL
     }).setInteractive({ useHandCursor: true });
+
+    // エラーテキスト
+    this.errorText = this.scene.add.text(
+      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50,
+      BOARD.OFFSET_Y + 300,
+      '',
+      {
+        ...DEFAULT_TEXT_STYLE,
+        color: COLORS.TEXT.DANGER
+      }
+    ).setVisible(false);
   }
 
   setupEventHandlers(handlers: {
@@ -88,25 +118,32 @@ export class GomokuUI {
 
   updateForNoGame(playerId: string, isLoading: boolean) {
     this.infoText.setText(
-      'プレイヤーID:\n' + playerId.substring(0, 20) + '...'
+      `Player ID:\n${playerId.substring(0, 20)}...`
     );
-    this.statusText.setText(isLoading ? '読み込み中...' : 'ゲームを作成してください');
+    this.statusText.setText(isLoading ? i18next.t('gamePlay.loading') : i18next.t('gamePlay.waitingForOpponent'));
     this.createGameButton.setVisible(!isLoading);
     this.forfeitButton.setVisible(false);
   }
 
-  updateGameInfo(game: Gomoku, playerColor: string, isGameFinished: boolean, winner: string | null, isLoading: boolean) {
-    let infoText = `ゲームID: ${game.id.substring(0, 8)}...\n`;
-    infoText += `あなたの色: ${playerColor === 'black' ? '黒' : '白'}\n`;
-    infoText += `作成日時: ${new Date(game.created_at).toLocaleTimeString()}\n`;
+  updateGameInfo(
+    game: Gomoku,
+    playerColor: string,
+    isGameFinished: boolean,
+    winner: string | null,
+    isLoading: boolean,
+    texts: GameInfoTexts
+  ) {
+    let infoText = `Game ID: ${game.id.substring(0, 8)}...\n`;
+    infoText += `Your Color: ${playerColor === 'black' ? '⚫' : '⚪'}\n`;
+    infoText += `Created: ${new Date(game.created_at).toLocaleTimeString()}\n`;
 
     if (isLoading) {
-      infoText += '状態: 処理中...';
+      infoText += `Status: ${texts.loading}`;
     } else if (isGameFinished) {
-      infoText += '状態: ゲーム終了\n';
+      infoText += `Status: ${i18next.t('gamePlay.gameFinished')}\n`;
       if (winner) {
-        const winnerText = winner === playerColor ? 'あなたの勝利!' : '相手の勝利';
-        infoText += `結果: ${winnerText}`;
+        const winnerText = winner === playerColor ? i18next.t('gamePlay.win') : i18next.t('gamePlay.lose');
+        infoText += `Result: ${winnerText}`;
       }
     }
 
@@ -115,19 +152,31 @@ export class GomokuUI {
 
   updateGameStatus(isGameFinished: boolean, isPlayerTurn: boolean, isLoading: boolean) {
     if (isGameFinished) {
-      this.statusText.setText('ゲームが終了しました\n新しいゲームを作成できます');
+      this.statusText.setText(i18next.t('gamePlay.gameFinished'));
     } else if (isPlayerTurn && !isLoading) {
-      this.statusText.setText('あなたのターンです\n盤面をクリックして石を置いてください');
+      this.statusText.setText(i18next.t('gamePlay.yourTurn'));
     } else if (!isLoading) {
-      this.statusText.setText('相手のターンです\nお待ちください');
+      this.statusText.setText(i18next.t('gamePlay.opponentTurn'));
     } else {
-      this.statusText.setText('処理中...');
+      this.statusText.setText(i18next.t('gamePlay.loading'));
     }
   }
 
   updateButtonVisibility(isGameFinished: boolean, isLoading: boolean) {
     this.createGameButton.setVisible(isGameFinished);
     this.forfeitButton.setVisible(!isGameFinished && !isLoading);
+  }
+
+  showGameResult(message: string) {
+    this.statusText.setText(message);
+  }
+
+  showError(error: string) {
+    this.errorText.setText(error).setVisible(true);
+    // 3秒後にエラーメッセージを非表示にする
+    this.scene.time.delayedCall(3000, () => {
+      this.errorText.setVisible(false);
+    });
   }
 
   destroy() {
@@ -137,5 +186,6 @@ export class GomokuUI {
     this.forfeitButton.destroy();
     this.debugText.destroy();
     this.backButton.destroy();
+    this.errorText.destroy();
   }
 } 

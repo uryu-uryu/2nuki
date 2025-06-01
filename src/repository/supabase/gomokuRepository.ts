@@ -39,13 +39,13 @@ export class GomokuRepository {
         .single();
 
       if (error) {
-        logger.error('ゲーム作成エラー:', error);
+        logger.error('ゲーム作成エラー - Supabaseエラー:', error.message, '詳細:', error.details);
         return null;
       }
 
       return data as Gomoku;
     } catch (error) {
-      logger.error('ゲーム作成例外:', error);
+      logger.error('ゲーム作成例外 - 予期せぬエラー:', error instanceof Error ? error.message : String(error));
       return null;
     }
   }
