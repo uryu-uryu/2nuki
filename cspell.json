@@ -6,6 +6,7 @@
         "languagedetector",
         "supabase",
         "phaser",
+        "playfab",
         "realtime",
         "postgrest",
         "vite"

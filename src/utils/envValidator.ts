@@ -12,6 +12,7 @@ const REQUIRED_ENV_VARS = {
   VITE_SUPABASE_URL: '必須: Supabaseのプロジェクトのエンドポイントを指定してください',
   VITE_SUPABASE_ANON_KEY: '必須: Supabaseの匿名認証キーを指定してください',
   VITE_MODE: '必須: アプリケーションの実行モード（development/production）を指定してください',
+  VITE_PLAYFAB_TITLE_ID: '必須: PlayFabのタイトルIDを指定してください',
 } as const;
 
 /**
