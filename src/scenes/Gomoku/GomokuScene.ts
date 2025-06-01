@@ -17,6 +17,7 @@ import { GomokuSessionController } from 'src/scenes/Gomoku/view/GomokuSessionCon
 import type { Gomoku, Player } from 'src/types';
 import { logger } from 'src/utils/logger';
 import { GameEventNames } from 'src/scenes/Gomoku/core/GameEventNames';
+import { SCENE_KEYS } from 'src/consts/scenes';
 
 export class GomokuGameScene extends Phaser.Scene {
   private gameContainer!: GomokuContainer;
@@ -25,7 +26,7 @@ export class GomokuGameScene extends Phaser.Scene {
   private state!: GomokuSessionController;
 
   constructor() {
-    super({ key: 'GomokuGame' });
+    super(SCENE_KEYS.GOMOKU_GAME);
   }
 
   init(data: { playerId: string }) {
@@ -66,7 +67,7 @@ export class GomokuGameScene extends Phaser.Scene {
     this.ui.setupEventHandlers({
       onCreateGame: () => this.createNewGame(),
       onForfeitGame: () => this.forfeitGame(),
-      onBack: () => this.scene.start('MainMenu')
+      onBack: () => this.scene.start(SCENE_KEYS.MAIN_MENU)
     });
 
     // 盤面の初期化

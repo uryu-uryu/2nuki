@@ -1,10 +1,11 @@
 import * as Phaser from 'phaser';
 import { SCREEN, PADDING } from 'src/consts/layout';
 import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from 'src/consts/styles';
+import { SCENE_KEYS } from 'src/consts/scenes';
 
 export class PlayerSelectScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'PlayerSelect' });
+    super(SCENE_KEYS.PLAYER_SELECT);
   }
 
   create() {
@@ -45,11 +46,11 @@ export class PlayerSelectScene extends Phaser.Scene {
     // ボタンのクリックイベント
     // ローカル環境のテスト用に、ひとまず固定の ＩＤ とする。
     player1Button.on('pointerdown', () => {
-      this.scene.start('GomokuGame', { playerId: '11111111-1111-1111-1111-111111111111' });
+      this.scene.start(SCENE_KEYS.GOMOKU_GAME, { playerId: '11111111-1111-1111-1111-111111111111' });
     });
 
     player2Button.on('pointerdown', () => {
-      this.scene.start('GomokuGame', { playerId: '22222222-2222-2222-2222-222222222222' });
+      this.scene.start(SCENE_KEYS.GOMOKU_GAME, { playerId: '22222222-2222-2222-2222-222222222222' });
     });
   }
 } 

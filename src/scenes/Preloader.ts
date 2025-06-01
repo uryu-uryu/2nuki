@@ -1,6 +1,8 @@
+import { SCENE_KEYS } from 'src/consts/scenes';
+
 export class Preloader extends Phaser.Scene {
   constructor() {
-    super('Preloader');
+    super(SCENE_KEYS.PRELOADER);
   }
 
   init() {
@@ -33,6 +35,6 @@ export class Preloader extends Phaser.Scene {
     //  例えば、ここでグローバルアニメーションを定義して、他のシーンで使えるようにできます。
 
     //  MainMenuへ移動します。カメラフェードなどのシーントランジションに置き換えることもできます。
-    this.scene.start('Game');
+    this.scene.start(SCENE_KEYS.MAIN_MENU);
   }
 }

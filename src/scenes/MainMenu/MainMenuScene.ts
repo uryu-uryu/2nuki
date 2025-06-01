@@ -1,10 +1,11 @@
 import * as Phaser from 'phaser';
 import { SCREEN, PADDING } from 'src/consts/layout';
 import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from 'src/consts/styles';
+import { SCENE_KEYS } from 'src/consts/scenes';
 
 export class MainMenuScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'MainMenu' });
+    super(SCENE_KEYS.MAIN_MENU);
   }
 
   create() {
@@ -28,7 +29,7 @@ export class MainMenuScene extends Phaser.Scene {
 
     // ボタンのクリックイベント
     startButton.on('pointerdown', () => {
-      this.scene.start('PlayerSelect');
+      this.scene.start(SCENE_KEYS.PLAYER_SELECT);
     });
   }
 } 
