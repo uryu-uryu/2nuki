@@ -7,6 +7,8 @@
  */
 
 import type { LoginResult, LoginWithCustomIDRequest } from '@/types/playfab';
+import { STORAGE_KEYS } from '@/consts/storage';
+import { StorageFactory } from '@/utils/storage/StorageFactory';
 import { logger } from '@/utils/logger';
 
 
@@ -21,9 +23,6 @@ declare const PlayFab: {
         ) => void;
     };
 };
-
-// LocalStorageのキー定数
-const STORAGE_KEY = 'playfab_custom_id'; // TODO: 移動させる。
 
 // PlayFab SDKのURL
 const PLAYFAB_SDK_URL = 'https://download.playfab.com/PlayFabClientApi.js';
@@ -75,9 +74,9 @@ export class PlayFabAuth {
   }
 
   /**
-         * シングルトンインスタンスを取得
-         * @returns PlayFabAuthのインスタンス
-         */
+           * シングルトンインスタンスを取得
+           * @returns PlayFabAuthのインスタンス
+           */
   public static getInstance(): PlayFabAuth {
     if (!PlayFabAuth.instance) {
       PlayFabAuth.instance = new PlayFabAuth();
@@ -86,34 +85,34 @@ export class PlayFabAuth {
   }
 
   /**
-         * ログイン情報を取得
-         * @returns ログイン結果情報。未ログインの場合はnull
-         */
+           * ログイン情報を取得
+           * @returns ログイン結果情報。未ログインの場合はnull
+           */
   public getLoginInfo(): LoginResult | null {
     return this.loginResult;
   }
 
   /**
-         * プレイヤーIDを取得
-         * @returns プレイヤーID。未ログインの場合はnull
-         */
+           * プレイヤーIDを取得
+           * @returns プレイヤーID。未ログインの場合はnull
+           */
   public getPlayerId(): string | null {
     return this.loginResult?.PlayFabId ?? null;
   }
 
   /**
-         * ログイン済みかどうかを確認
-         * @returns ログイン済みの場合はtrue
-         */
+           * ログイン済みかどうかを確認
+           * @returns ログイン済みの場合はtrue
+           */
   public isLoggedIn(): boolean {
     return this.loginResult !== null;
   }
 
   /**
-         * 匿名ログインを実行
-         * LocalStorageに保存されたIDがある場合はそれを使用
-         * @returns ログイン結果のPromise
-         */
+           * 匿名ログインを実行
+           * LocalStorageに保存されたIDがある場合はそれを使用
+           * @returns ログイン結果のPromise
+           */
   public async loginAnonymously(): Promise<LoginResult> {
     try {
       // SDKの初期化を待つ
@@ -126,7 +125,7 @@ export class PlayFabAuth {
       }
 
       // LocalStorageからCustomIDを取得（なければ新規生成）
-      const customId = this.getOrCreateCustomId();
+      const customId = await this.getOrCreateCustomId();
 
       // ログインリクエストを作成
       const request: LoginWithCustomIDRequest = {
@@ -159,9 +158,9 @@ export class PlayFabAuth {
   }
 
   /**
-         * PlayFabクライアントの初期化
-         * @returns Promise<void>
-         */
+           * PlayFabクライアントの初期化
+           * @returns Promise<void>
+           */
   private async initialize(): Promise<void> {
     if (this.isInitialized) {
       return;
@@ -186,13 +185,15 @@ export class PlayFabAuth {
   }
 
   /**
-         * LocalStorageからCustomIDを取得
-         * 存在しない場合は新規生成して保存
-         * @returns CustomID
-         */
-  private getOrCreateCustomId(): string {
-    // TODO: 環境 (ブラウザ / iOS など)の違いを吸収して適切なstorage を使用できるように
-    const storedId = window.localStorage.getItem(STORAGE_KEY);
+           * LocalStorageからCustomIDを取得
+           * 存在しない場合は新規生成して保存
+           * @returns CustomID
+           */
+  private async getOrCreateCustomId(): Promise<string> {
+    const storage = StorageFactory.getInstance();
+
+    // 保存されているIDを取得
+    const storedId = await storage.getItem(STORAGE_KEYS.PLAYFAB_CUSTOM_ID);
     if (storedId) {
       logger.info('既存のCustomIDを使用します');
       return storedId;
@@ -200,7 +201,7 @@ export class PlayFabAuth {
 
     // 新規IDを生成して保存
     const newId = Math.random().toString(36).substring(2);
-    window.localStorage.setItem(STORAGE_KEY, newId);
+    await storage.setItem(STORAGE_KEYS.PLAYFAB_CUSTOM_ID, newId);
     logger.info('新規CustomIDを生成しました');
     return newId;
   }
