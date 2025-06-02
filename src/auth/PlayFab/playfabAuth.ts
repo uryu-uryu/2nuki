@@ -121,6 +121,7 @@ export class PlayFabAuth {
       // ログイン済みの場合は既存の情報を返す
       if (this.loginResult) {
         logger.info('既にログインしています');
+        logger.info(this.loginResult);
         return this.loginResult;
       }
 
@@ -147,6 +148,7 @@ export class PlayFabAuth {
             // ログイン情報を保持
             this.loginResult = result.data;
             logger.info('匿名ログインに成功しました');
+            logger.info(result.data);
             resolve(result.data);
           }
         );

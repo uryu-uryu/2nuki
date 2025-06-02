@@ -114,7 +114,7 @@ export class GomokuGameScene extends Phaser.Scene {
     this.updateDisplay();
 
     try {
-      const opponentId = '22222222-2222-2222-2222-222222222222';
+      const opponentId = 'D4E0667168AEB3C';
       await this.gameContainer.createGame(opponentId, true);
     } finally {
       this.state.setLoading(false);

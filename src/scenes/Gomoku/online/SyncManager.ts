@@ -24,6 +24,11 @@ export class SyncManager {
     this.sessionManager = sessionManager;
     this.events = events;
     this.playerId = playerId;
+
+    // プレイヤーIDを設定
+    this.repository.setCurrentPlayer(playerId).catch(error => {
+      this.events.emitError(`プレイヤーID設定エラー: ${error}`);
+    });
   }
 
   // 新しいゲームを作成

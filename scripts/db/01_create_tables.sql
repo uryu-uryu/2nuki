@@ -4,10 +4,10 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- 五目並べの盤面テーブル
 CREATE TABLE gomoku (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  black_player_id UUID NOT NULL,
-  white_player_id UUID NOT NULL,
-  current_player_turn UUID NOT NULL,
-  winner_id UUID,
+  black_player_id TEXT NOT NULL,
+  white_player_id TEXT NOT NULL,
+  current_player_turn TEXT NOT NULL,
+  winner_id TEXT,
   board_state JSONB NOT NULL, -- 2次元配列をJSONで保存
   is_finished BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
