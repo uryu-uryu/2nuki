@@ -1,0 +1,8 @@
+-- プレイヤーIDを設定するための関数
+-- CREATE OR REPLACE FUNCTION set_config(key text, value text)
+-- RETURNS void AS $$
+-- BEGIN
+--   -- カスタム名前空間を使用
+--   PERFORM set_config('custom.' || key, value, false);
+-- END;
+-- $$ LANGUAGE plpgsql SECURITY DEFINER; 
