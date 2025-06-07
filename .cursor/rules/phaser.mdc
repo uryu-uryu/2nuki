@@ -26,8 +26,9 @@ alwaysApply: true
 - ログの文言は日本語とすること
 - console.log等は使用せずに必ずloggerを使用すること
 - container-Presenter パターンを意識し、UI とロジックを分けて実装すること
-- 相対importは禁止です、絶対importしてください
+- 相対importは禁止です、絶対importを用いること
 - 文字列は/constsで定義すること
+- 暫定的な値を入れた場合にはTODOコメントをつけること
 
 
 ■ directory構成
