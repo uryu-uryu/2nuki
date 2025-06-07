@@ -19,6 +19,24 @@ export const jaTranslations: ResourceType = {
       description: 'ローカルテスト用：\n別のタブで異なるプレイヤーを選択してください'
     },
 
+    // マッチメイキング
+    matchmaking: {
+      title: 'マッチメイキング',
+      searching: '対戦相手を検索中...',
+      found: 'マッチが見つかりました！',
+      timeout: 'マッチメイキングがタイムアウトしました',
+      error: 'エラーが発生しました',
+      cancelled: 'キャンセルされました',
+      elapsedTime: '経過時間: {{time}}秒',
+      cancel: 'キャンセル',
+      retry: '再試行',
+      backToMenu: 'メニューに戻る',
+      connecting: 'ゲームに接続中...',
+      preparingGame: 'ゲームを準備中...',
+      creatingGame: 'ゲームを作成中...',
+      startingGame: 'ゲームを開始中...'
+    },
+
     // ゲームプレイ
     gamePlay: {
       score: 'スコア',

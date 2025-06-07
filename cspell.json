@@ -2,10 +2,12 @@
     "version": "0.2",
     "language": "en",
     "words": [
+        "2nuki",
         "gomoku",
         "languagedetector",
         "supabase",
         "phaser",
+        "playfab",
         "realtime",
         "postgrest",
         "vite"

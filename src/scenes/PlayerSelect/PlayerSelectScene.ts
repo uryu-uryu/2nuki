@@ -47,11 +47,11 @@ export class PlayerSelectScene extends Phaser.Scene {
     // ボタンのクリックイベント
     // ローカル環境のテスト用に、ひとまず固定の ＩＤ とする。
     player1Button.on('pointerdown', () => {
-      this.scene.start(SCENE_KEYS.GOMOKU_GAME, { playerId: '11111111-1111-1111-1111-111111111111' });
+      this.scene.start(SCENE_KEYS.GOMOKU_GAME, { playerId: 'EFB703BEA8688F46' });
     });
 
     player2Button.on('pointerdown', () => {
-      this.scene.start(SCENE_KEYS.GOMOKU_GAME, { playerId: '22222222-2222-2222-2222-222222222222' });
+      this.scene.start(SCENE_KEYS.GOMOKU_GAME, { playerId: 'D4E0667168AEB3C' });
     });
   }
 } 

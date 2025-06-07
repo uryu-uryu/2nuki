@@ -22,6 +22,12 @@ export const DB_SCHEMA = {
   PUBLIC: 'public'
 } as const;
 
+// リアルタイムチャンネル名
+export const REALTIME_CHANNELS = {
+  GAME_STATE_CHANGES: 'game_state_changes',
+  GOMOKU_CHANGES: 'gomoku_changes'
+} as const;
+
 // gomokuテーブルのデータ型
 export interface Gomoku {
   [GOMOKU_COLUMNS.ID]: string;
@@ -72,9 +78,9 @@ export interface Move {
 }
 
 export interface GameState {
-  [GAME_STATE_COLUMNS.ID]: number;
-  [GAME_STATE_COLUMNS.SCORE]: number;
-  [GAME_STATE_COLUMNS.UPDATED_AT]: string;
+  id: number;
+  score: number;
+  updated_at: string;
 }
 
 // game_stateテーブルのカラム定数
@@ -82,10 +88,4 @@ export const GAME_STATE_COLUMNS = {
   ID: 'id',
   SCORE: 'score',
   UPDATED_AT: 'updated_at'
-} as const;
-
-// リアルタイムチャンネル名
-export const REALTIME_CHANNELS = {
-  GAME_STATE_CHANGES: 'game_state_changes',
-  GOMOKU_CHANGES: 'gomoku_changes'
 } as const; 

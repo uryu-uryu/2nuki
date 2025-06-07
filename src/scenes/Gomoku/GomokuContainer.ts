@@ -23,7 +23,10 @@ export class GomokuContainer {
   private playerId: string;
 
   constructor(playerId?: string) {
-    this.playerId = playerId || '11111111-1111-1111-1111-111111111111';
+    if (!playerId) {
+      throw new Error('playerId is required');
+    }
+    this.playerId = playerId;
     this.events = new GameEvents();
     this.sessionManager = new SessionManager(this.events);
     this.syncManager = new SyncManager(this.playerId, this.sessionManager, this.events);

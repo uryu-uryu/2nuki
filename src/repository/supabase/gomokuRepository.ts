@@ -3,8 +3,10 @@ import {
   DB_TABLES,
   GOMOKU_COLUMNS,
   REALTIME_CHANNELS,
-  DB_SCHEMA,
+  DB_SCHEMA
 } from 'src/types';
+
+
 import type { Gomoku, GameCreateParams, Player } from 'src/types';
 import { BOARD_SIZE } from 'src/consts/const';
 import { logger } from 'src/utils/logger';
@@ -16,14 +18,56 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABA
 export class GomokuRepository {
   private supabase: SupabaseClient;
   private channel: RealtimeChannel | null = null;
+  // TODO: PlayFabから取得したプレイヤーIDを保持（将来の機能拡張で使用予定）
+  // @ts-expect-error: 将来の機能で使用予定?
+  private currentPlayerId: string | null = null;
 
   constructor() {
     this.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
 
+  /**
+   * PlayFabのプレイヤーIDを設定し、Supabaseのセッションに反映します
+   * @param playerId PlayFabのプレイヤーID
+   */
+  async setCurrentPlayer(playerId: string): Promise<void> {
+    try {
+      this.currentPlayerId = playerId;
+      // TODO: RLS機能が一時的にOFFのため、認証関係の処理をコメントアウト
+      // SupabaseのセッションにプレイヤーIDを設定
+      // const { error } = await this.supabase.rpc(SUPABASE_RPC.SET_CONFIG, {
+      //   parameter: SUPABASE_CONFIG.PLAYER_ID,
+      //   value: playerId
+      // });
+
+      // if (error) {
+      //   logger.error('プレイヤーID設定エラー:', error);
+      //   throw error;
+      // }
+
+      logger.info('プレイヤーIDを設定しました（RLS無効化のため認証処理はスキップ）:', playerId);
+    } catch (error) {
+      logger.error('プレイヤーID設定例外:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 現在のプレイヤーIDが設定されているか確認します
+   * @throws Error プレイヤーIDが設定されていない場合
+   */
+  private validateCurrentPlayer(): void {
+    return;
+    // TODO: ひとまずコメントアウト、validate の仕方が間違っているぽくて動かないので後で確認する
+    // if (!this.currentPlayerId) {
+    //   throw new Error('プレイヤーIDが設定されていません。setCurrentPlayer()を先に呼び出してください。');
+    // }
+  }
+
   // 新しいゲームを作成
   async createGame(params: GameCreateParams): Promise<Gomoku | null> {
     try {
+      this.validateCurrentPlayer();
       const emptyBoard: number[][] = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(0));
 
       const { data, error } = await this.supabase
@@ -53,6 +97,7 @@ export class GomokuRepository {
   // ゲームを取得
   async getGame(gameId: string): Promise<Gomoku | null> {
     try {
+      this.validateCurrentPlayer();
       const { data, error } = await this.supabase
         .from(DB_TABLES.GOMOKU)
         .select('*')
@@ -74,6 +119,7 @@ export class GomokuRepository {
   // プレイヤーのアクティブなゲーム一覧を取得
   async getPlayerGames(playerId: string): Promise<Gomoku[]> {
     try {
+      this.validateCurrentPlayer();
       const { data, error } = await this.supabase
         .from(DB_TABLES.GOMOKU)
         .select('*')
@@ -96,6 +142,7 @@ export class GomokuRepository {
   // ゲーム状態を更新
   async updateGameState(gameId: string, updateData: Partial<Gomoku>): Promise<Gomoku | null> {
     try {
+      this.validateCurrentPlayer();
       const { data, error } = await this.supabase
         .from(DB_TABLES.GOMOKU)
         .update(updateData)

@@ -12,20 +12,27 @@ alwaysApply: true
 - Typescript
 - Phaser.js
 - Supabase
+- PlayFab
 - Vite
 
 ■ 実装時の注意点
 - 常に既存コードの設計や記法を参考にすること
 - 各ファイルの先頭に、該当ファイルのまとめ(目的や概要、責務)を必ず示すこと
 - /docs 内の仕様を参照すること
-- クラスのmain関数が長くなる場合、適切な粒度でメソッドを分割すること
+- 関数が長くなる場合、適切な粒度でメソッドを分割すること
 - 書籍「リーダブルコード」のようなベストプラクティスを常に適用してください
 - コードの意図・背景などのコメントを日本語で積極的に入れること。
 - 関数には DocString を記載すること
 - ログの文言は日本語とすること
 - console.log等は使用せずに必ずloggerを使用すること
 - container-Presenter パターンを意識し、UI とロジックを分けて実装すること
-- 相対importは禁止
+- 相対importは禁止です、絶対importを用いること
+- 文字列は/constsで定義すること
+- 暫定的な値を入れた場合にはTODOコメントをつけること
+
+
+■ 機能提供
+Web 上での公開だけでなく、iOS アプリとしても提供予定。
 
 
 ■ directory構成
@@ -56,3 +63,5 @@ alwaysApply: true
 ├── tsconfig.json              # TypeScript設定
 ├── vite.config.ts             # Viteビルド設定
 └── README.md                  # プロジェクト説明
+
+

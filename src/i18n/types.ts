@@ -12,6 +12,24 @@ export type TranslationKeys = {
         description: string;
     };
 
+    // マッチメイキング
+    matchmaking: {
+        title: string;
+        searching: string;
+        found: string;
+        timeout: string;
+        error: string;
+        cancelled: string;
+        cancel: string;
+        retry: string;
+        backToMenu: string;
+        elapsedTime: string;
+        connecting: string;
+        preparingGame: string;
+        creatingGame: string;
+        startingGame: string;
+    };
+
     // ゲームプレイ
     gamePlay: {
         score: string;

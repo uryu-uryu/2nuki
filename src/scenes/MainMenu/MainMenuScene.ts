@@ -54,7 +54,10 @@ export class MainMenuScene extends Phaser.Scene {
 
     // ボタンのクリックイベント
     startButton.on('pointerdown', () => {
-      this.scene.start(SCENE_KEYS.PLAYER_SELECT);
+      // TODO: プレイヤー選択画面を廃止しする
+      
+      // プレイヤー選択画面を廃止し、マッチメイキング画面に直接遷移
+      this.scene.start(SCENE_KEYS.MATCHMAKING);
     });
   }
 } 
