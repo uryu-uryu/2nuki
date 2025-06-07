@@ -1,6 +1,6 @@
 /**
  * PlayFab SDKの型定義
- * 必要最小限の型のみを定義
+ * PlayFab REST APIに合わせた型定義
  */
 
 declare global {
@@ -24,14 +24,15 @@ export interface PlayFabStatic {
 }
 
 export interface LoginWithCustomIDRequest {
+    TitleId: string;
     CustomId: string;
     CreateAccount?: boolean;
 }
 
 export interface LoginResult {
-    PlayFabId: string;
+    PlayFabId?: string;
     NewlyCreated?: boolean;
-    SessionTicket: string;
+    SessionTicket?: string;
     SettingsForUser?: Record<string, unknown>;
     LastLoginTime?: string;
     EntityToken?: Record<string, unknown>;
@@ -55,8 +56,8 @@ export interface PlayFabSuccessContainer<T> {
 }
 
 export type PlayFabCallback<T> = (
-    result: PlayFabSuccessContainer<T>,
-    error: PlayFabError | null
+    error: PlayFabError | null,
+    result: PlayFabSuccessContainer<T> | null
 ) => void;
 
 export interface ClientAPI {
