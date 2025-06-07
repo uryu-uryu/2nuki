@@ -16,6 +16,8 @@ export default [
         'window': 'readonly',
         'document': 'readonly',
         'console': 'readonly',
+        'fetch': 'readonly',
+        'Response': 'readonly',
         // Phaserのグローバル変数を許可
         'Phaser': 'readonly'
       }

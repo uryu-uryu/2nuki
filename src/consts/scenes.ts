@@ -7,6 +7,7 @@ export const SCENE_KEYS = {
   PRELOADER: 'Preloader',
   MAIN_MENU: 'MainMenu',
   PLAYER_SELECT: 'PlayerSelect',
+  MATCHMAKING: 'Matchmaking',
   GOMOKU_GAME: 'GomokuGame',
 } as const;
 

@@ -11,8 +11,9 @@ import { logger } from 'src/utils/logger';
 const REQUIRED_ENV_VARS = {
   VITE_SUPABASE_URL: '必須: Supabaseのプロジェクトのエンドポイントを指定してください',
   VITE_SUPABASE_ANON_KEY: '必須: Supabaseの匿名認証キーを指定してください',
-  VITE_MODE: '必須: アプリケーションの実行モード（development/production）を指定してください',
+  VITE_MODE: '必須: アプリケーションの実行モード（dev/prod）を指定してください',
   VITE_PLAYFAB_TITLE_ID: '必須: PlayFabのタイトルIDを指定してください',
+  VITE_PLAYFAB_MATCHMAKING_QUEUE_NAME: '必須: PlayFabマッチメイキングのキュー名を指定してください（例: gomoku-dev, gomoku-prod）',
 } as const;
 
 /**
@@ -31,7 +32,7 @@ export function validateEnv(): void {
 
   // MODEの値が正しいかチェック
   if (import.meta.env.VITE_MODE && !['dev', 'prod'].includes(import.meta.env.VITE_MODE)) {
-    missingVars.push('VITE_MODE: 値は "development" または "production" のいずれかを指定してください');
+    missingVars.push('VITE_MODE: 値は "dev" または "prod" のいずれかを指定してください');
   }
 
   // 不足している環境変数がある場合はエラーをスロー

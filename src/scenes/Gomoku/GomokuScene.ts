@@ -7,6 +7,7 @@
  * - シーンのライフサイクル管理
  * - 各コンポーネントの初期化と連携
  * - ゲームマネージャーとのイベント連携
+ * - マッチメイキングからのゲーム開始
  */
 
 import * as Phaser from 'phaser';
@@ -15,6 +16,7 @@ import { GomokuBoardRender } from 'src/scenes/Gomoku/view/GomokuBoard';
 import { GomokuUI } from 'src/scenes/Gomoku/view/GomokuUI';
 import { GomokuSessionController } from 'src/scenes/Gomoku/view/GomokuSessionController';
 import type { Gomoku, Player } from 'src/types';
+import type { MatchTransitionData } from 'src/types/matchmaking';
 import { logger } from 'src/utils/logger';
 import { GameEventNames } from 'src/scenes/Gomoku/core/GameEventNames';
 import { SCENE_KEYS } from 'src/consts/scenes';
@@ -25,14 +27,36 @@ export class GomokuGameScene extends Phaser.Scene {
   private gameBoard!: GomokuBoardRender;
   private ui!: GomokuUI;
   private state!: GomokuSessionController;
+  private matchData?: MatchTransitionData;
 
   constructor() {
     super(SCENE_KEYS.GOMOKU_GAME);
   }
 
-  init(data: { playerId: string }) {
-    this.state = new GomokuSessionController();
-    this.gameContainer = new GomokuContainer(data.playerId);
+  init(data?: MatchTransitionData | { playerId: string }) {
+    // マッチメイキングからのデータか従来のプレイヤーIDかを判定
+    if (data && 'matchId' in data) {
+      // マッチメイキングからの遷移
+      this.matchData = data;
+      this.state = new GomokuSessionController();
+      this.gameContainer = new GomokuContainer(data.myPlayerId);
+      logger.info('マッチメイキングからゲーム開始:', {
+        gameId: data.gameId,
+        matchId: data.matchId,
+        role: data.isBlackPlayer ? '先攻（黒石）' : '後攻（白石）'
+      });
+    } else if (data && 'playerId' in data) {
+      // 従来の方式（手動ゲーム作成）
+      this.state = new GomokuSessionController();
+      this.gameContainer = new GomokuContainer(data.playerId);
+      logger.info('手動ゲーム作成モードで開始:', data.playerId);
+    } else {
+      // デフォルト（デバッグ用）
+      this.state = new GomokuSessionController();
+      this.gameContainer = new GomokuContainer('default-player');
+      logger.warn('デフォルトプレイヤーでゲーム開始');
+    }
+
     this.setupGameManagerEvents();
   }
 
@@ -81,8 +105,12 @@ export class GomokuGameScene extends Phaser.Scene {
       }
     });
 
-    // 既存のゲームを読み込み
-    this.loadExistingGames();
+    // マッチメイキングからの遷移かどうかで処理を分ける
+    if (this.matchData) {
+      this.startMatchedGame();
+    } else {
+      this.loadExistingGames();
+    }
 
     // 初期状態を表示
     this.updateDisplay();
@@ -240,6 +268,50 @@ export class GomokuGameScene extends Phaser.Scene {
   private showError(error: string) {
     logger.error(error);
     this.ui.showError(i18next.t('gamePlay.error'));
+  }
+
+  /**
+   * マッチメイキングから作成されたゲームを開始
+   */
+  private async startMatchedGame() {
+    if (!this.matchData) {
+      logger.error('マッチデータが存在しません');
+      return;
+    }
+
+    this.state.setLoading(true);
+    this.updateDisplay();
+
+    try {
+      if (this.matchData.gameId) {
+        // Supabaseで作成済みのゲームを読み込み
+        this.state.setGameId(this.matchData.gameId);
+
+        // プレイヤーのゲーム一覧を読み込んで該当ゲームを取得
+        await this.gameContainer.loadPlayerGames();
+
+        // ゲームデータを取得して盤面を更新
+        const game = this.gameContainer.getGame(this.matchData.gameId);
+        if (game) {
+          this.updateBoard();
+          logger.info('マッチメイキングゲーム読み込み完了:', {
+            gameId: this.matchData.gameId,
+            blackPlayer: game.black_player_id,
+            whitePlayer: game.white_player_id,
+            myRole: this.matchData.isBlackPlayer ? '先攻（黒石）' : '後攻（白石）'
+          });
+        } else {
+          logger.error('ゲームが見つかりません:', this.matchData.gameId);
+          this.showError('ゲームが見つかりませんでした');
+        }
+      }
+    } catch (error) {
+      logger.error('マッチメイキングゲーム開始エラー:', error);
+      this.showError('ゲームの開始に失敗しました');
+    } finally {
+      this.state.setLoading(false);
+      this.updateDisplay();
+    }
   }
 
   destroy() {

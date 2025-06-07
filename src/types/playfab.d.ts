@@ -31,7 +31,7 @@ export interface LoginWithCustomIDRequest {
 export interface LoginResult {
     PlayFabId: string;
     NewlyCreated?: boolean;
-    SessionTicket?: string;
+    SessionTicket: string;
     SettingsForUser?: Record<string, unknown>;
     LastLoginTime?: string;
     EntityToken?: Record<string, unknown>;

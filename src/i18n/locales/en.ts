@@ -19,6 +19,24 @@ export const enTranslations: ResourceType = {
       description: 'Local Test Mode:\nPlease select different players in separate tabs'
     },
 
+    // Matchmaking
+    matchmaking: {
+      title: 'Matchmaking',
+      searching: 'Searching for opponent...',
+      found: 'Match found!',
+      timeout: 'Matchmaking timeout',
+      error: 'An error occurred',
+      cancelled: 'Cancelled',
+      cancel: 'Cancel',
+      retry: 'Retry',
+      backToMenu: 'Back to Menu',
+      elapsedTime: 'Elapsed time: {{time}}s',
+      connecting: 'Connecting to game...',
+      preparingGame: 'Preparing game...',
+      creatingGame: 'Creating game...',
+      startingGame: 'Starting game...'
+    },
+
     // Game Play
     gamePlay: {
       score: 'Score',
