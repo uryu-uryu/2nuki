@@ -3,8 +3,8 @@
  */
 
 import * as Phaser from 'phaser';
-import { BOARD } from 'src/consts/layout';
-import { COLORS } from 'src/consts/styles';
+import { BOARD } from '@/consts/styles/layout';
+import { COLORS } from '@/consts/styles/color';
 
 export class GomokuBoardRender {
   private scene: Phaser.Scene;

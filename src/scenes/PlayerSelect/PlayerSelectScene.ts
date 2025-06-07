@@ -1,6 +1,8 @@
 import * as Phaser from 'phaser';
-import { SCREEN, PADDING } from 'src/consts/layout';
-import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from 'src/consts/styles';
+import { LAYOUT } from '@/consts/styles/layout';
+import { PADDING } from '@/consts/styles/components';
+import { COLORS } from '@/consts/styles/color';
+import { LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from '@/consts/styles/text';
 import { SCENE_KEYS } from 'src/consts/scenes';
 import i18next from 'src/i18n/config';
 
@@ -14,13 +16,13 @@ export class PlayerSelectScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(COLORS.BACKGROUND);
 
     // タイトルテキスト
-    this.add.text(SCREEN.CENTER_X, 100, i18next.t('playerSelect.title'), {
+    this.add.text(LAYOUT.SCREEN.CENTER_X, 100, i18next.t('playerSelect.title'), {
       ...LARGE_TEXT_STYLE,
       color: COLORS.TEXT.PRIMARY
     }).setOrigin(0.5);
 
     // プレイヤー1のボタン
-    const player1Button = this.add.text(SCREEN.CENTER_X, 200, i18next.t('playerSelect.player1'), {
+    const player1Button = this.add.text(LAYOUT.SCREEN.CENTER_X, 200, i18next.t('playerSelect.player1'), {
       ...DEFAULT_TEXT_STYLE,
       color: COLORS.TEXT.WHITE,
       backgroundColor: COLORS.BUTTON.PRIMARY,
@@ -29,7 +31,7 @@ export class PlayerSelectScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true });
 
     // プレイヤー2のボタン
-    const player2Button = this.add.text(SCREEN.CENTER_X, 300, i18next.t('playerSelect.player2'), {
+    const player2Button = this.add.text(LAYOUT.SCREEN.CENTER_X, 300, i18next.t('playerSelect.player2'), {
       ...DEFAULT_TEXT_STYLE,
       color: COLORS.TEXT.WHITE,
       backgroundColor: COLORS.BUTTON.SECONDARY,
@@ -38,7 +40,7 @@ export class PlayerSelectScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true });
 
     // 説明テキスト
-    this.add.text(SCREEN.CENTER_X, 400, i18next.t('playerSelect.description'), {
+    this.add.text(LAYOUT.SCREEN.CENTER_X, 400, i18next.t('playerSelect.description'), {
       ...DEFAULT_TEXT_STYLE,
       color: COLORS.TEXT.SECONDARY,
       align: 'center'

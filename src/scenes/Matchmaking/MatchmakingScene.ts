@@ -11,8 +11,10 @@
  */
 
 import * as Phaser from 'phaser';
-import { SCREEN, PADDING } from 'src/consts/layout';
-import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from 'src/consts/styles';
+import { LAYOUT } from '@/consts/styles/layout';
+import { PADDING } from '@/consts/styles/components';
+import { COLORS } from '@/consts/styles/color';
+import { LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from '@/consts/styles/text';
 import { SCENE_KEYS } from 'src/consts/scenes';
 import { MATCHMAKING_CONFIG, MATCHMAKING_STATUS } from 'src/consts/matchmaking';
 import { PlayFabMatchmaking } from 'src/service/playfab/matchMaking/PlayFabMatchmaking';
@@ -69,7 +71,7 @@ export class MatchmakingScene extends Phaser.Scene {
   private createUI(): void {
     // タイトル
     this.add.text(
-      SCREEN.CENTER_X, 100,
+      LAYOUT.SCREEN.CENTER_X, 100,
       i18next.t('matchmaking.title'),
       {
         ...LARGE_TEXT_STYLE,
@@ -79,7 +81,7 @@ export class MatchmakingScene extends Phaser.Scene {
 
     // ステータステキスト
     this.statusText = this.add.text(
-      SCREEN.CENTER_X, 200,
+      LAYOUT.SCREEN.CENTER_X, 200,
       i18next.t('matchmaking.searching'),
       {
         ...DEFAULT_TEXT_STYLE,
@@ -90,7 +92,7 @@ export class MatchmakingScene extends Phaser.Scene {
 
     // 経過時間テキスト
     this.elapsedTimeText = this.add.text(
-      SCREEN.CENTER_X, 250,
+      LAYOUT.SCREEN.CENTER_X, 250,
       i18next.t('matchmaking.elapsedTime', { time: '0' }),
       {
         ...DEFAULT_TEXT_STYLE,
@@ -113,7 +115,7 @@ export class MatchmakingScene extends Phaser.Scene {
            */
   private createLoadingAnimation(): void {
     this.loadingAnimation = this.add.graphics();
-    this.loadingAnimation.setPosition(SCREEN.CENTER_X, 320);
+    this.loadingAnimation.setPosition(LAYOUT.SCREEN.CENTER_X, 320);
 
     // 回転アニメーション
     this.tweens.add({
@@ -145,7 +147,7 @@ export class MatchmakingScene extends Phaser.Scene {
   private createButtons(): void {
     // キャンセルボタン
     this.cancelButton = this.add.text(
-      SCREEN.CENTER_X - 100, 400,
+      LAYOUT.SCREEN.CENTER_X - 100, 400,
       i18next.t('matchmaking.cancel'),
       {
         ...DEFAULT_TEXT_STYLE,
@@ -159,7 +161,7 @@ export class MatchmakingScene extends Phaser.Scene {
 
     // 再試行ボタン
     this.retryButton = this.add.text(
-      SCREEN.CENTER_X, 400,
+      LAYOUT.SCREEN.CENTER_X, 400,
       i18next.t('matchmaking.retry'),
       {
         ...DEFAULT_TEXT_STYLE,
@@ -173,7 +175,7 @@ export class MatchmakingScene extends Phaser.Scene {
 
     // メニューに戻るボタン
     this.backToMenuButton = this.add.text(
-      SCREEN.CENTER_X + 100, 400,
+      LAYOUT.SCREEN.CENTER_X + 100, 400,
       i18next.t('matchmaking.backToMenu'),
       {
         ...DEFAULT_TEXT_STYLE,

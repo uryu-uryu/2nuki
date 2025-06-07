@@ -9,8 +9,10 @@
 
 import * as Phaser from 'phaser';
 import type { Gomoku } from 'src/types';
-import { BOARD, PADDING } from 'src/consts/layout';
-import { COLORS, DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from 'src/consts/styles';
+import { BOARD } from '@/consts/styles/layout';
+import { PADDING } from '@/consts/styles/components';
+import { COLORS } from '@/consts/styles/color';
+import { DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from '@/consts/styles/text';
 import i18next from 'src/i18n/config';
 
 interface GameInfoTexts {

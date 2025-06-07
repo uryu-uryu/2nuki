@@ -4,7 +4,7 @@ import { PlayerSelectScene } from 'src/scenes/PlayerSelect/PlayerSelectScene';
 import { MatchmakingScene } from 'src/scenes/Matchmaking/MatchmakingScene';
 import { Boot } from 'src/scenes/Boot';
 import { Preloader } from 'src/scenes/Preloader';
-import { LAYOUT } from 'src/consts/layout';
+import { LAYOUT } from '@/consts/styles/layout';
 import * as Phaser from 'phaser';
 
 export const gomokuConfig: Phaser.Types.Core.GameConfig = {
