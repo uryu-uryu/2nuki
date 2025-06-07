@@ -6,19 +6,22 @@
  * などの機能を提供
  */
 
-import type { LoginWithCustomIDRequest, LoginResult, PlayFabError } from '@/types/playfab';
+import type { LoginResult } from '@/types/playfab';
 import { STORAGE_KEYS } from '@/consts/storage';
 import { StorageFactory } from '@/utils/storage/StorageFactory';
 import { logger } from '@/utils/logger';
+import { PlayFabApiClient } from '@/auth/PlayFab/PlayFabApiClient';
 
 export class PlayFabAuth {
   private static instance: PlayFabAuth;
   private isInitialized = false;
   private loginResult: LoginResult | null = null;
   private titleId: string;
+  private apiClient: PlayFabApiClient;
 
   private constructor() {
     this.titleId = import.meta.env.VITE_PLAYFAB_TITLE_ID;
+    this.apiClient = new PlayFabApiClient(this.titleId);
   }
 
   /**
@@ -76,48 +79,15 @@ export class PlayFabAuth {
       // LocalStorageからCustomIDを取得（なければ新規生成）
       const customId = await this.getOrCreateCustomId();
 
-      // ログインリクエストを作成（PlayFab REST API仕様に従ってTitleIdを含める）
-      const request: LoginWithCustomIDRequest = {
-        TitleId: this.titleId,
-        CustomId: customId,
-        CreateAccount: true // アカウントが存在しない場合は新規作成
-      };
-
-      // PlayFab REST APIに直接リクエスト
-      const response = await fetch(`https://${this.titleId}.playfabapi.com/Client/LoginWithCustomID`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-PlayFabSDK': 'WebSDK-1.0.0'
-        },
-        body: JSON.stringify(request)
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      // エラーチェック
-      if (result.code !== 200) {
-        const error: PlayFabError = {
-          code: result.code,
-          status: result.status,
-          error: result.error,
-          errorCode: result.errorCode,
-          errorMessage: result.errorMessage,
-          errorDetails: result.errorDetails
-        };
-        throw error;
-      }
+      // PlayFab APIクライアントを使用してログイン
+      const loginResult = await this.apiClient.loginWithCustomId(customId, true);
 
       // ログイン情報を保持
-      this.loginResult = result.data;
+      this.loginResult = loginResult;
       logger.info('匿名ログインに成功しました');
-      logger.info(result.data);
+      logger.info(loginResult);
 
-      return result.data;
+      return loginResult;
     } catch (error) {
       logger.error('匿名ログイン処理でエラーが発生しました', error);
       throw error;
@@ -166,5 +136,23 @@ export class PlayFabAuth {
     await storage.setItem(STORAGE_KEYS.PLAYFAB_CUSTOM_ID, newId);
     logger.info('新規CustomIDを生成しました');
     return newId;
+  }
+
+  /**
+   * APIクライアントを取得
+   * テスト等で使用
+   * @returns PlayFabApiClientのインスタンス
+   */
+  public getApiClient(): PlayFabApiClient {
+    return this.apiClient;
+  }
+
+  /**
+   * ログアウト処理
+   * ログイン情報をクリア
+   */
+  public logout(): void {
+    this.loginResult = null;
+    logger.info('ログアウトしました');
   }
 }
