@@ -31,6 +31,10 @@ alwaysApply: true
 - 暫定的な値を入れた場合にはTODOコメントをつけること
 
 
+■ 機能提供
+Web 上での公開だけでなく、iOS アプリとしても提供予定。
+
+
 ■ directory構成
 ├── src/
 │   ├── components/            # 共通利用するUIコンポーネント
