@@ -5,10 +5,8 @@ import {
   REALTIME_CHANNELS,
   DB_SCHEMA
 } from 'src/types';
-import {
-  SUPABASE_RPC,
-  SUPABASE_CONFIG
-} from 'src/consts/supabase';
+
+
 import type { Gomoku, GameCreateParams, Player } from 'src/types';
 import { BOARD_SIZE } from 'src/consts/const';
 import { logger } from 'src/utils/logger';
@@ -20,6 +18,8 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABA
 export class GomokuRepository {
   private supabase: SupabaseClient;
   private channel: RealtimeChannel | null = null;
+  // TODO: PlayFabから取得したプレイヤーIDを保持（将来の機能拡張で使用予定）
+  // @ts-expect-error: 将来の機能で使用予定?
   private currentPlayerId: string | null = null;
 
   constructor() {
@@ -33,18 +33,19 @@ export class GomokuRepository {
   async setCurrentPlayer(playerId: string): Promise<void> {
     try {
       this.currentPlayerId = playerId;
+      // TODO: RLS機能が一時的にOFFのため、認証関係の処理をコメントアウト
       // SupabaseのセッションにプレイヤーIDを設定
-      const { error } = await this.supabase.rpc(SUPABASE_RPC.SET_CONFIG, {
-        parameter: SUPABASE_CONFIG.PLAYER_ID,
-        value: playerId
-      });
+      // const { error } = await this.supabase.rpc(SUPABASE_RPC.SET_CONFIG, {
+      //   parameter: SUPABASE_CONFIG.PLAYER_ID,
+      //   value: playerId
+      // });
 
-      if (error) {
-        logger.error('プレイヤーID設定エラー:', error);
-        throw error;
-      }
+      // if (error) {
+      //   logger.error('プレイヤーID設定エラー:', error);
+      //   throw error;
+      // }
 
-      logger.info('プレイヤーIDを設定しました:', playerId);
+      logger.info('プレイヤーIDを設定しました（RLS無効化のため認証処理はスキップ）:', playerId);
     } catch (error) {
       logger.error('プレイヤーID設定例外:', error);
       throw error;
