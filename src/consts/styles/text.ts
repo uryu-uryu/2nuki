@@ -28,7 +28,7 @@ export const PHASER_FONT_SIZE = {
 // デフォルトのテキストスタイル
 export const DEFAULT_TEXT_STYLE: Phaser.Types.GameObjects.Text.TextStyle = {
   fontSize: PHASER_FONT_SIZE.MEDIUM,
-  color: COLORS.TEXT.WHITE,
+  color: '#FFFFFF',
   fontFamily: FONT.FAMILY,
 } as const;
 
@@ -47,5 +47,5 @@ export const SMALL_TEXT_STYLE: Phaser.Types.GameObjects.Text.TextStyle = {
 // ステータス表示用の緑テキストスタイル
 export const STATUS_TEXT_STYLE: Phaser.Types.GameObjects.Text.TextStyle = {
   ...SMALL_TEXT_STYLE,
-  color: COLORS.TEXT.GREEN,
+  color: COLORS.GREEN,
 } as const;

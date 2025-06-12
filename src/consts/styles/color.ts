@@ -4,35 +4,23 @@
  */
 
 export const COLORS = {
+  // 基本色
+  WHITE: 0xFFFFFF,
+  BLACK: 0x000000,
+  RED: 0xFF0000,
+
   // ゲーム盤面の色
   BOARD: 0xDEB887,
   GRID: 0x8B4513,
 
-  // 石の色
-  BLACK_STONE: 0x000000,
-  WHITE_STONE: 0xFFFFFF,
-  WHITE_STONE_BORDER: 0x000000,
-
-  // ハイライト・強調色
-  HIGHLIGHT: 0xFF0000,
-
   // 背景色
   BACKGROUND: 0xF5F5DC,
 
-  // テキストの色
-  TEXT: {
-    PRIMARY: '#000000',
-    SECONDARY: '#666666',
-    WHITE: '#FFFFFF',
-    GREEN: '#00ff00',
-    BLUE: '#1565c0',
-    DANGER: '#f44336'
-  },
-
-  // ボタンの色
-  BUTTON: {
-    PRIMARY: '#4CAF50',
-    SECONDARY: '#2196F3',
-    DANGER: '#f44336'
-  }
+  // UI色（文字列形式）
+  GRAY: '#666666',
+  GREEN: '#00ff00',
+  BLUE: '#1565c0',
+  DANGER: '#f44336',
+  PRIMARY: '#4CAF50',
+  SECONDARY: '#2196F3'
 } as const; 

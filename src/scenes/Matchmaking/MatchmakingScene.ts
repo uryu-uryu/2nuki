@@ -69,13 +69,13 @@ export class MatchmakingScene extends Phaser.Scene {
            * UIを作成
            */
   private createUI(): void {
-    // タイトル
+    // タイトルテキスト
     this.add.text(
       LAYOUT.SCREEN.CENTER_X, 100,
       i18next.t('matchmaking.title'),
       {
         ...LARGE_TEXT_STYLE,
-        color: COLORS.TEXT.PRIMARY
+        color: '#000000'
       }
     ).setOrigin(0.5);
 
@@ -85,7 +85,7 @@ export class MatchmakingScene extends Phaser.Scene {
       i18next.t('matchmaking.searching'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.PRIMARY,
+        color: '#000000',
         align: 'center'
       }
     ).setOrigin(0.5);
@@ -96,7 +96,7 @@ export class MatchmakingScene extends Phaser.Scene {
       i18next.t('matchmaking.elapsedTime', { time: '0' }),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.SECONDARY
+        color: COLORS.GRAY
       }
     ).setOrigin(0.5);
 
@@ -151,8 +151,8 @@ export class MatchmakingScene extends Phaser.Scene {
       i18next.t('matchmaking.cancel'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.WHITE,
-        backgroundColor: COLORS.BUTTON.SECONDARY,
+        color: '#FFFFFF',
+        backgroundColor: COLORS.SECONDARY,
         padding: PADDING.MEDIUM
       }
     ).setOrigin(0.5)
@@ -165,8 +165,8 @@ export class MatchmakingScene extends Phaser.Scene {
       i18next.t('matchmaking.retry'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.WHITE,
-        backgroundColor: COLORS.BUTTON.PRIMARY,
+        color: '#FFFFFF',
+        backgroundColor: COLORS.PRIMARY,
         padding: PADDING.MEDIUM
       }
     ).setOrigin(0.5)
@@ -179,8 +179,8 @@ export class MatchmakingScene extends Phaser.Scene {
       i18next.t('matchmaking.backToMenu'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.WHITE,
-        backgroundColor: COLORS.BUTTON.SECONDARY,
+        color: '#FFFFFF',
+        backgroundColor: COLORS.SECONDARY,
         padding: PADDING.MEDIUM
       }
     ).setOrigin(0.5)
@@ -474,25 +474,27 @@ export class MatchmakingScene extends Phaser.Scene {
   private updateStatusDisplay(): void {
     switch (this.matchmakingState.status) {
     case MATCHMAKING_STATUS.SEARCHING:
+      this.statusText.setColor('#000000');
       this.statusText.setText(i18next.t('matchmaking.searching'));
-      this.statusText.setColor(COLORS.TEXT.PRIMARY);
       break;
     case MATCHMAKING_STATUS.MATCHED:
+      this.statusText.setColor(COLORS.PRIMARY);
       this.statusText.setText(i18next.t('matchmaking.found'));
-      this.statusText.setColor(COLORS.BUTTON.PRIMARY);
       break;
     case MATCHMAKING_STATUS.TIMEOUT:
+      this.statusText.setColor(COLORS.GRAY);
       this.statusText.setText(i18next.t('matchmaking.timeout'));
-      this.statusText.setColor(COLORS.TEXT.SECONDARY);
       break;
     case MATCHMAKING_STATUS.ERROR:
-      this.statusText.setText(i18next.t('matchmaking.error'));
-      this.statusText.setColor('#ff4444');
+      this.statusText.setColor(COLORS.DANGER);
+      this.statusText.setText(this.matchmakingState.error || i18next.t('matchmaking.error'));
       break;
     case MATCHMAKING_STATUS.CANCELLED:
-      this.statusText.setText('キャンセルされました');
-      this.statusText.setColor(COLORS.TEXT.SECONDARY);
+      this.statusText.setColor(COLORS.GRAY);
+      this.statusText.setText(i18next.t('matchmaking.cancelled'));
       break;
+    default:
+      this.statusText.setText('');
     }
   }
 

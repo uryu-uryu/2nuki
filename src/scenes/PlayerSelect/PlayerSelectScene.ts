@@ -18,14 +18,14 @@ export class PlayerSelectScene extends Phaser.Scene {
     // タイトルテキスト
     this.add.text(LAYOUT.SCREEN.CENTER_X, 100, i18next.t('playerSelect.title'), {
       ...LARGE_TEXT_STYLE,
-      color: COLORS.TEXT.PRIMARY
+      color: '#000000'
     }).setOrigin(0.5);
 
     // プレイヤー1のボタン
     const player1Button = this.add.text(LAYOUT.SCREEN.CENTER_X, 200, i18next.t('playerSelect.player1'), {
       ...DEFAULT_TEXT_STYLE,
-      color: COLORS.TEXT.WHITE,
-      backgroundColor: COLORS.BUTTON.PRIMARY,
+      color: '#FFFFFF',
+      backgroundColor: COLORS.PRIMARY,
       padding: PADDING.MEDIUM
     }).setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
@@ -33,8 +33,8 @@ export class PlayerSelectScene extends Phaser.Scene {
     // プレイヤー2のボタン
     const player2Button = this.add.text(LAYOUT.SCREEN.CENTER_X, 300, i18next.t('playerSelect.player2'), {
       ...DEFAULT_TEXT_STYLE,
-      color: COLORS.TEXT.WHITE,
-      backgroundColor: COLORS.BUTTON.SECONDARY,
+      color: '#FFFFFF',
+      backgroundColor: COLORS.SECONDARY,
       padding: PADDING.MEDIUM
     }).setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
@@ -42,7 +42,7 @@ export class PlayerSelectScene extends Phaser.Scene {
     // 説明テキスト
     this.add.text(LAYOUT.SCREEN.CENTER_X, 400, i18next.t('playerSelect.description'), {
       ...DEFAULT_TEXT_STYLE,
-      color: COLORS.TEXT.SECONDARY,
+      color: COLORS.GRAY,
       align: 'center'
     }).setOrigin(0.5);
 

@@ -9,8 +9,8 @@
 
 import * as Phaser from 'phaser';
 import type { Gomoku } from 'src/types';
-import { BOARD } from '@/consts/styles/layout';
-import { PADDING } from '@/consts/styles/components';
+import { PADDING, MARGIN, BOARD } from '@/consts/styles/components';
+import { TIMING } from '@/consts/const';
 import { COLORS } from '@/consts/styles/color';
 import { DEFAULT_TEXT_STYLE, SMALL_TEXT_STYLE } from '@/consts/styles/text';
 import i18next from 'src/i18n/config';
@@ -39,65 +39,65 @@ export class GomokuUI {
 
   private createUI() {
     // 情報表示テキスト
-    this.infoText = this.scene.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50, BOARD.OFFSET_Y, '', {
+    this.infoText = this.scene.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + MARGIN.SIDE_PANEL, BOARD.OFFSET_Y, '', {
       ...DEFAULT_TEXT_STYLE,
-      color: COLORS.TEXT.PRIMARY
+      color: '#000000'
     });
 
     // ステータステキスト
-    this.statusText = this.scene.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50, BOARD.OFFSET_Y + 120, '', {
+    this.statusText = this.scene.add.text(BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + MARGIN.SIDE_PANEL, BOARD.OFFSET_Y + 120, '', {
       ...DEFAULT_TEXT_STYLE,
-      color: COLORS.TEXT.PRIMARY
+      color: '#000000'
     });
 
     // ゲーム作成ボタン
     this.createGameButton = this.scene.add.text(
-      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50,
+      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + MARGIN.SIDE_PANEL,
       BOARD.OFFSET_Y + 200,
       i18next.t('gamePlay.newGame'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.WHITE,
-        backgroundColor: COLORS.BUTTON.PRIMARY,
+        color: '#FFFFFF',
+        backgroundColor: COLORS.PRIMARY,
         padding: PADDING.SMALL
       }
     ).setInteractive({ useHandCursor: true });
 
     // ゲーム放棄ボタン
     this.forfeitButton = this.scene.add.text(
-      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50,
-      BOARD.OFFSET_Y + 250,
+      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + MARGIN.SIDE_PANEL,
+      BOARD.OFFSET_Y + 200 + MARGIN.BUTTON_SPACING,
       i18next.t('gamePlay.forfeit'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.WHITE,
-        backgroundColor: COLORS.BUTTON.DANGER,
+        color: '#FFFFFF',
+        backgroundColor: COLORS.DANGER,
         padding: PADDING.SMALL
       }
     ).setInteractive({ useHandCursor: true }).setVisible(false);
 
     // デバッグ情報テキスト
-    this.debugText = this.scene.add.text(10, 10, '', {
+    this.debugText = this.scene.add.text(MARGIN.SMALL, MARGIN.SMALL, '', {
       ...SMALL_TEXT_STYLE,
-      color: COLORS.TEXT.SECONDARY
+      color: COLORS.GRAY
     });
 
     // 戻るボタン
-    this.backButton = this.scene.add.text(10, 10, i18next.t('playerSelect.back'), {
+    this.backButton = this.scene.add.text(MARGIN.SMALL, MARGIN.SMALL, i18next.t('playerSelect.back'), {
       ...DEFAULT_TEXT_STYLE,
-      color: COLORS.TEXT.WHITE,
-      backgroundColor: COLORS.BUTTON.PRIMARY,
+      color: '#FFFFFF',
+      backgroundColor: COLORS.PRIMARY,
       padding: PADDING.SMALL
     }).setInteractive({ useHandCursor: true });
 
     // エラーテキスト
     this.errorText = this.scene.add.text(
-      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + 50,
+      BOARD.OFFSET_X + BOARD.SIZE * BOARD.CELL_SIZE + MARGIN.SIDE_PANEL,
       BOARD.OFFSET_Y + 300,
       '',
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.DANGER
+        color: COLORS.DANGER
       }
     ).setVisible(false);
   }
@@ -175,8 +175,8 @@ export class GomokuUI {
 
   showError(error: string) {
     this.errorText.setText(error).setVisible(true);
-    // 3秒後にエラーメッセージを非表示にする
-    this.scene.time.delayedCall(3000, () => {
+    // エラーメッセージを一定時間後に非表示にする
+    this.scene.time.delayedCall(TIMING.ERROR_MESSAGE_DURATION, () => {
       this.errorText.setVisible(false);
     });
   }
