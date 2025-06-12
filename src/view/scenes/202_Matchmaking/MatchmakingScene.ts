@@ -112,6 +112,7 @@ export class MatchmakingScene extends Phaser.Scene {
 
   /**
            * ローディングアニメーションを作成
+           * TODO: components に移動。
            */
   private createLoadingAnimation(): void {
     this.loadingAnimation = this.add.graphics();
