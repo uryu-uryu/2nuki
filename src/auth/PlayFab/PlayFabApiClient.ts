@@ -38,10 +38,10 @@ export class PlayFabApiClient {
   private baseUrl: string;
 
   /**
-       * コンストラクタ
-       * @param titleId PlayFabのタイトルID
-       * @param httpClient HTTPクライアント（省略時は自動で取得）
-       */
+         * コンストラクタ
+         * @param titleId PlayFabのタイトルID
+         * @param httpClient HTTPクライアント（省略時は自動で取得）
+         */
   constructor(titleId: string, httpClient?: IHttpClient) {
     this.titleId = titleId;
     this.baseUrl = getPlayFabApiBaseUrl(titleId);
@@ -54,11 +54,11 @@ export class PlayFabApiClient {
   }
 
   /**
-       * CustomIDを使用したログイン
-       * @param customId ユーザーのカスタムID
-       * @param createAccount アカウントが存在しない場合に新規作成するか
-       * @returns ログイン結果のPromise
-       */
+         * CustomIDを使用したログイン
+         * @param customId ユーザーのカスタムID
+         * @param createAccount アカウントが存在しない場合に新規作成するか
+         * @returns ログイン結果のPromise
+         */
   public async loginWithCustomId(customId: string, createAccount: boolean = true): Promise<LoginResult> {
     try {
       const request: LoginWithCustomIDRequest = {
@@ -119,39 +119,39 @@ export class PlayFabApiClient {
   }
 
   /**
-       * プレイヤープロフィールを取得
-       * TODO: 今後実装予定
-       * @param _playFabId プレイヤーID
-       * @returns プレイヤープロフィール
-       */
+         * プレイヤープロフィールを取得
+         * TODO: 今後実装予定
+         * @param _playFabId プレイヤーID
+         * @returns プレイヤープロフィール
+         */
   public async getPlayerProfile(_playFabId: string): Promise<unknown> {
     // TODO: 実装予定
     throw new Error('getPlayerProfile は未実装です');
   }
 
   /**
-       * プレイヤー統計を更新
-       * TODO: 今後実装予定
-       * @param _statistics 更新する統計データ
-       * @returns 更新結果
-       */
+         * プレイヤー統計を更新
+         * TODO: 今後実装予定
+         * @param _statistics 更新する統計データ
+         * @returns 更新結果
+         */
   public async updatePlayerStatistics(_statistics: unknown): Promise<unknown> {
     // TODO: 実装予定
     throw new Error('updatePlayerStatistics は未実装です');
   }
 
   /**
-       * タイトルIDを取得
-       * @returns PlayFabのタイトルID
-       */
+         * タイトルIDを取得
+         * @returns PlayFabのタイトルID
+         */
   public getTitleId(): string {
     return this.titleId;
   }
 
   /**
-       * ベースURLを取得
-       * @returns PlayFab APIのベースURL
-       */
+         * ベースURLを取得
+         * @returns PlayFab APIのベースURL
+         */
   public getBaseUrl(): string {
     return this.baseUrl;
   }

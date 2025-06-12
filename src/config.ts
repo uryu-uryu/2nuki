@@ -1,21 +1,29 @@
-import { GomokuGameScene } from 'src/scenes/Gomoku/GomokuScene';
-import { MainMenuScene } from 'src/scenes/MainMenu/MainMenuScene';
-import { PlayerSelectScene } from 'src/scenes/PlayerSelect/PlayerSelectScene';
-import { MatchmakingScene } from 'src/scenes/Matchmaking/MatchmakingScene';
-import { Boot } from 'src/scenes/Boot';
-import { Preloader } from 'src/scenes/Preloader';
-import { LAYOUT } from 'src/consts/layout';
-import * as Phaser from 'phaser';
+/**
+ * Phaserゲームの設定ファイル
+ * ゲームの画面サイズ、レンダラー設定など
+ */
 
-export const gomokuConfig: Phaser.Types.Core.GameConfig = {
+import * as Phaser from 'phaser';
+import { Boot } from '@/view/scenes/001_Boot/Boot';
+import { Preloader } from '@/view/scenes/002_Preloader/Preloader';
+import { MainMenuScene } from '@/view/scenes/101_MainMenu/MainMenuScene';
+import { GomokuGameScene } from '@/view/scenes/301_Gomoku/GomokuScene';
+import { MatchmakingScene } from '@/view/scenes/202_Matchmaking/MatchmakingScene';
+import { LAYOUT } from '@/consts/styles/layout';
+import { COLORS } from '@/consts/styles/color';
+
+export const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: LAYOUT.GAME.WIDTH,
   height: LAYOUT.GAME.HEIGHT,
-  backgroundColor: LAYOUT.BACKGROUND_COLOR,
-  scene: [Boot, Preloader, MainMenuScene, PlayerSelectScene, MatchmakingScene, GomokuGameScene],
-  scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-  },
-  parent: undefined, // main.tsで上書き
+  backgroundColor: COLORS.BACKGROUND,
+  parent: 'game-container',
+  scene: [
+    Boot,
+    Preloader,
+    MainMenuScene,
+    GomokuGameScene,
+    MatchmakingScene,
+  ]
 };
+

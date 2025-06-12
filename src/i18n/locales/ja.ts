@@ -10,15 +10,6 @@ export const jaTranslations: ResourceType = {
     title: '五目並べ',
     startButton: 'ゲームを始める',
 
-    // プレイヤー選択
-    playerSelect: {
-      title: 'プレイヤー選択',
-      player1: 'プレイヤー1として参加',
-      player2: 'プレイヤー2として参加',
-      back: '戻る',
-      description: 'ローカルテスト用：\n別のタブで異なるプレイヤーを選択してください'
-    },
-
     // マッチメイキング
     matchmaking: {
       title: 'マッチメイキング',
@@ -39,6 +30,7 @@ export const jaTranslations: ResourceType = {
 
     // ゲームプレイ
     gamePlay: {
+      back: '戻る',
       score: 'スコア',
       time: '残り時間',
       turn: '{{player}}の番です',

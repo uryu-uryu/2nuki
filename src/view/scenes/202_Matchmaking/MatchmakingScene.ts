@@ -11,8 +11,10 @@
  */
 
 import * as Phaser from 'phaser';
-import { SCREEN, PADDING } from 'src/consts/layout';
-import { COLORS, LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from 'src/consts/styles';
+import { LAYOUT } from '@/consts/styles/layout';
+import { PADDING } from '@/consts/styles/components';
+import { COLORS } from '@/consts/styles/color';
+import { LARGE_TEXT_STYLE, DEFAULT_TEXT_STYLE } from '@/consts/styles/text';
 import { SCENE_KEYS } from 'src/consts/scenes';
 import { MATCHMAKING_CONFIG, MATCHMAKING_STATUS } from 'src/consts/matchmaking';
 import { PlayFabMatchmaking } from 'src/service/playfab/matchMaking/PlayFabMatchmaking';
@@ -38,7 +40,7 @@ export class MatchmakingScene extends Phaser.Scene {
   private pollingTimer!: Phaser.Time.TimerEvent;
 
   constructor() {
-    super(SCENE_KEYS.MATCHMAKING);
+    super(SCENE_KEYS._202_MATCHMAKING);
 
     // 初期状態を設定
     this.matchmakingState = {
@@ -67,34 +69,34 @@ export class MatchmakingScene extends Phaser.Scene {
            * UIを作成
            */
   private createUI(): void {
-    // タイトル
+    // タイトルテキスト
     this.add.text(
-      SCREEN.CENTER_X, 100,
+      LAYOUT.SCREEN.CENTER_X, 100,
       i18next.t('matchmaking.title'),
       {
         ...LARGE_TEXT_STYLE,
-        color: COLORS.TEXT.PRIMARY
+        color: '#000000'
       }
     ).setOrigin(0.5);
 
     // ステータステキスト
     this.statusText = this.add.text(
-      SCREEN.CENTER_X, 200,
+      LAYOUT.SCREEN.CENTER_X, 200,
       i18next.t('matchmaking.searching'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.PRIMARY,
+        color: '#000000',
         align: 'center'
       }
     ).setOrigin(0.5);
 
     // 経過時間テキスト
     this.elapsedTimeText = this.add.text(
-      SCREEN.CENTER_X, 250,
+      LAYOUT.SCREEN.CENTER_X, 250,
       i18next.t('matchmaking.elapsedTime', { time: '0' }),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.SECONDARY
+        color: COLORS.GRAY
       }
     ).setOrigin(0.5);
 
@@ -110,10 +112,11 @@ export class MatchmakingScene extends Phaser.Scene {
 
   /**
            * ローディングアニメーションを作成
+           * TODO: components に移動。
            */
   private createLoadingAnimation(): void {
     this.loadingAnimation = this.add.graphics();
-    this.loadingAnimation.setPosition(SCREEN.CENTER_X, 320);
+    this.loadingAnimation.setPosition(LAYOUT.SCREEN.CENTER_X, 320);
 
     // 回転アニメーション
     this.tweens.add({
@@ -145,12 +148,12 @@ export class MatchmakingScene extends Phaser.Scene {
   private createButtons(): void {
     // キャンセルボタン
     this.cancelButton = this.add.text(
-      SCREEN.CENTER_X - 100, 400,
+      LAYOUT.SCREEN.CENTER_X - 100, 400,
       i18next.t('matchmaking.cancel'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.WHITE,
-        backgroundColor: COLORS.BUTTON.SECONDARY,
+        color: '#FFFFFF',
+        backgroundColor: COLORS.SECONDARY,
         padding: PADDING.MEDIUM
       }
     ).setOrigin(0.5)
@@ -159,12 +162,12 @@ export class MatchmakingScene extends Phaser.Scene {
 
     // 再試行ボタン
     this.retryButton = this.add.text(
-      SCREEN.CENTER_X, 400,
+      LAYOUT.SCREEN.CENTER_X, 400,
       i18next.t('matchmaking.retry'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.WHITE,
-        backgroundColor: COLORS.BUTTON.PRIMARY,
+        color: '#FFFFFF',
+        backgroundColor: COLORS.PRIMARY,
         padding: PADDING.MEDIUM
       }
     ).setOrigin(0.5)
@@ -173,12 +176,12 @@ export class MatchmakingScene extends Phaser.Scene {
 
     // メニューに戻るボタン
     this.backToMenuButton = this.add.text(
-      SCREEN.CENTER_X + 100, 400,
+      LAYOUT.SCREEN.CENTER_X + 100, 400,
       i18next.t('matchmaking.backToMenu'),
       {
         ...DEFAULT_TEXT_STYLE,
-        color: COLORS.TEXT.WHITE,
-        backgroundColor: COLORS.BUTTON.SECONDARY,
+        color: '#FFFFFF',
+        backgroundColor: COLORS.SECONDARY,
         padding: PADDING.MEDIUM
       }
     ).setOrigin(0.5)
@@ -346,7 +349,7 @@ export class MatchmakingScene extends Phaser.Scene {
       await this.delay(1000);
 
       // ゲームシーンに遷移（データを引き継ぎ）
-      this.scene.start(SCENE_KEYS.GOMOKU_GAME, transitionData);
+      this.scene.start(SCENE_KEYS._301_GOMOKU_GAME, transitionData);
     } catch (error) {
       logger.error('マッチ成立後の処理エラー:', error);
       this.setError(error instanceof Error ? error.message : 'ゲームの開始に失敗しました');
@@ -405,7 +408,7 @@ export class MatchmakingScene extends Phaser.Scene {
            */
   private goBackToMenu(): void {
     this.stopTimers();
-    this.scene.start(SCENE_KEYS.MAIN_MENU);
+    this.scene.start(SCENE_KEYS._101_MAIN_MENU);
   }
 
   /**
@@ -472,25 +475,27 @@ export class MatchmakingScene extends Phaser.Scene {
   private updateStatusDisplay(): void {
     switch (this.matchmakingState.status) {
     case MATCHMAKING_STATUS.SEARCHING:
+      this.statusText.setColor('#000000');
       this.statusText.setText(i18next.t('matchmaking.searching'));
-      this.statusText.setColor(COLORS.TEXT.PRIMARY);
       break;
     case MATCHMAKING_STATUS.MATCHED:
+      this.statusText.setColor(COLORS.PRIMARY);
       this.statusText.setText(i18next.t('matchmaking.found'));
-      this.statusText.setColor(COLORS.BUTTON.PRIMARY);
       break;
     case MATCHMAKING_STATUS.TIMEOUT:
+      this.statusText.setColor(COLORS.GRAY);
       this.statusText.setText(i18next.t('matchmaking.timeout'));
-      this.statusText.setColor(COLORS.TEXT.SECONDARY);
       break;
     case MATCHMAKING_STATUS.ERROR:
-      this.statusText.setText(i18next.t('matchmaking.error'));
-      this.statusText.setColor('#ff4444');
+      this.statusText.setColor(COLORS.DANGER);
+      this.statusText.setText(this.matchmakingState.error || i18next.t('matchmaking.error'));
       break;
     case MATCHMAKING_STATUS.CANCELLED:
-      this.statusText.setText('キャンセルされました');
-      this.statusText.setColor(COLORS.TEXT.SECONDARY);
+      this.statusText.setColor(COLORS.GRAY);
+      this.statusText.setText(i18next.t('matchmaking.cancelled'));
       break;
+    default:
+      this.statusText.setText('');
     }
   }
 

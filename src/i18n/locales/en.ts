@@ -10,15 +10,6 @@ export const enTranslations: ResourceType = {
     title: 'Gomoku',
     startButton: 'Start Game',
 
-    // Player Select
-    playerSelect: {
-      title: 'Select Player',
-      player1: 'Join as Player 1',
-      player2: 'Join as Player 2',
-      back: 'Back',
-      description: 'Local Test Mode:\nPlease select different players in separate tabs'
-    },
-
     // Matchmaking
     matchmaking: {
       title: 'Matchmaking',
@@ -39,6 +30,7 @@ export const enTranslations: ResourceType = {
 
     // Game Play
     gamePlay: {
+      back: 'Back',
       score: 'Score',
       time: 'Time Left',
       turn: '{{player}}\'s Turn',

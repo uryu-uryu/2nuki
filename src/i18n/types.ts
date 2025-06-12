@@ -3,15 +3,6 @@ export type TranslationKeys = {
     title: string;
     startButton: string;
 
-    // プレイヤー選択
-    playerSelect: {
-        title: string;
-        player1: string;
-        player2: string;
-        back: string;
-        description: string;
-    };
-
     // マッチメイキング
     matchmaking: {
         title: string;
@@ -32,6 +23,7 @@ export type TranslationKeys = {
 
     // ゲームプレイ
     gamePlay: {
+        back: string;
         score: string;
         time: string;
         turn: string;

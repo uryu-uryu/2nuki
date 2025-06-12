@@ -3,8 +3,8 @@
  */
 
 import * as Phaser from 'phaser';
-import { BOARD } from 'src/consts/layout';
-import { COLORS } from 'src/consts/styles';
+import { BOARD } from '@/consts/styles/components';
+import { COLORS } from '@/consts/styles/color';
 
 export class GomokuBoardRender {
   private scene: Phaser.Scene;
@@ -75,13 +75,13 @@ export class GomokuBoardRender {
 
     if (stoneType === 1) {
       // 黒石
-      stone.fillStyle(COLORS.BLACK_STONE);
+      stone.fillStyle(COLORS.BLACK);
       stone.fillCircle(x, y, BOARD.STONE_RADIUS);
     } else if (stoneType === 2) {
       // 白石
-      stone.fillStyle(COLORS.WHITE_STONE);
+      stone.fillStyle(COLORS.WHITE);
       stone.fillCircle(x, y, BOARD.STONE_RADIUS);
-      stone.lineStyle(2, COLORS.WHITE_STONE_BORDER);
+      stone.lineStyle(2, COLORS.BLACK);
       stone.strokeCircle(x, y, BOARD.STONE_RADIUS);
     }
 

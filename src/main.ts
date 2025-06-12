@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer';
 import * as Phaser from 'phaser';
-import { gomokuConfig } from 'src/config';
+import { config } from 'src/config';
 import { logger } from 'src/utils/logger';
 import { validateEnv } from 'src/utils/envValidator';
 import i18next from 'src/i18n/config';
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Phaserゲームインスタンスを作成
     const game = new Phaser.Game({
-      ...gomokuConfig,
+      ...config,
       parent: 'game-container'
     });
 

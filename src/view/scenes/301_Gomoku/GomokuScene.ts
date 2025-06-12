@@ -11,14 +11,14 @@
  */
 
 import * as Phaser from 'phaser';
-import { GomokuContainer } from 'src/scenes/Gomoku/GomokuContainer';
-import { GomokuBoardRender } from 'src/scenes/Gomoku/view/GomokuBoard';
-import { GomokuUI } from 'src/scenes/Gomoku/view/GomokuUI';
-import { GomokuSessionController } from 'src/scenes/Gomoku/view/GomokuSessionController';
+import { GomokuContainer } from '@/view/scenes/301_Gomoku/GomokuContainer';
+import { GomokuBoardRender } from '@/view/scenes/301_Gomoku/view/GomokuBoard';
+import { GomokuUI } from '@/view/scenes/301_Gomoku/view/GomokuUI';
+import { GomokuSessionController } from '@/view/scenes/301_Gomoku/view/GomokuSessionController';
 import type { Gomoku, Player } from 'src/types';
 import type { MatchTransitionData } from 'src/types/matchmaking';
 import { logger } from 'src/utils/logger';
-import { GameEventNames } from 'src/scenes/Gomoku/core/GameEventNames';
+import { GameEventNames } from '@/view/scenes/301_Gomoku/core/GameEventNames';
 import { SCENE_KEYS } from 'src/consts/scenes';
 import i18next from 'src/i18n/config';
 
@@ -30,7 +30,7 @@ export class GomokuGameScene extends Phaser.Scene {
   private matchData?: MatchTransitionData;
 
   constructor() {
-    super(SCENE_KEYS.GOMOKU_GAME);
+    super(SCENE_KEYS._301_GOMOKU_GAME);
   }
 
   init(data?: MatchTransitionData | { playerId: string }) {
@@ -92,7 +92,7 @@ export class GomokuGameScene extends Phaser.Scene {
     this.ui.setupEventHandlers({
       onCreateGame: () => this.createNewGame(),
       onForfeitGame: () => this.forfeitGame(),
-      onBack: () => this.scene.start(SCENE_KEYS.MAIN_MENU)
+      onBack: () => this.scene.start(SCENE_KEYS._101_MAIN_MENU)
     });
 
     // 盤面の初期化
