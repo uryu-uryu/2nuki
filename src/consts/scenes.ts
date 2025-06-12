@@ -9,12 +9,11 @@
  * - 3xx: ゲーム本体
  */
 export const SCENE_KEYS = {
-  _001_BOOT: '001_Boot',
-  _002_PRELOADER: '002_Preloader',
-  _101_MAIN_MENU: '101_MainMenu',
-  _201_PLAYER_SELECT: '201_PlayerSelect',
-  _202_MATCHMAKING: '202_Matchmaking',
-  _301_GOMOKU_GAME: '301_GomokuGame',
+  _001_BOOT: 'Boot',
+  _002_PRELOADER: 'Preloader',
+  _101_MAIN_MENU: 'MainMenu',
+  _202_MATCHMAKING: 'Matchmaking',
+  _301_GOMOKU_GAME: 'GomokuGame',
 } as const;
 
 // 型の定義

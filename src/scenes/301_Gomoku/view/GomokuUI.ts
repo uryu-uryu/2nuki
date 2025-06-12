@@ -83,7 +83,7 @@ export class GomokuUI {
     });
 
     // 戻るボタン
-    this.backButton = this.scene.add.text(MARGIN.SMALL, MARGIN.SMALL, i18next.t('playerSelect.back'), {
+    this.backButton = this.scene.add.text(MARGIN.SMALL, MARGIN.SMALL, i18next.t('gamePlay.back'), {
       ...DEFAULT_TEXT_STYLE,
       color: '#FFFFFF',
       backgroundColor: COLORS.PRIMARY,
