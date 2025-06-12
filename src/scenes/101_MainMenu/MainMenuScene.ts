@@ -31,8 +31,8 @@ export class MainMenuScene extends Phaser.Scene {
       padding: { x: 20, y: 10 }
     }).setOrigin(0.5).setInteractive({ useHandCursor: true })
       .on('pointerdown', () => {
-        logger.info('プレイヤー選択画面に遷移');
-        this.scene.start(SCENE_KEYS._201_PLAYER_SELECT);
+        logger.info('マッチメイキング画面に遷移');
+        this.scene.start(SCENE_KEYS._202_MATCHMAKING);
       });
 
     // 言語切り替えボタン

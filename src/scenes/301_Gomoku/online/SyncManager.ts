@@ -10,8 +10,8 @@
 import type { Gomoku, GameCreateParams } from 'src/types';
 import type { GameUpdateData } from 'src/types/gomoku';
 import { GomokuRepository } from 'src/repository/supabase/gomokuRepository';
-import { SessionManager } from 'src/scenes/Gomoku/online/SessionManager';
-import { GameEvents } from 'src/scenes/Gomoku/core/GameEvents';
+import { SessionManager } from '@/scenes/301_Gomoku/online/SessionManager';
+import { GameEvents } from '@/scenes/301_Gomoku/core/GameEvents';
 
 export class SyncManager {
   private repository: GomokuRepository;

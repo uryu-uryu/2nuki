@@ -11,14 +11,14 @@
  */
 
 import * as Phaser from 'phaser';
-import { GomokuContainer } from 'src/scenes/Gomoku/GomokuContainer';
-import { GomokuBoardRender } from 'src/scenes/Gomoku/view/GomokuBoard';
-import { GomokuUI } from 'src/scenes/Gomoku/view/GomokuUI';
-import { GomokuSessionController } from 'src/scenes/Gomoku/view/GomokuSessionController';
+import { GomokuContainer } from '@/scenes/301_Gomoku/GomokuContainer';
+import { GomokuBoardRender } from '@/scenes/301_Gomoku/view/GomokuBoard';
+import { GomokuUI } from '@/scenes/301_Gomoku/view/GomokuUI';
+import { GomokuSessionController } from '@/scenes/301_Gomoku/view/GomokuSessionController';
 import type { Gomoku, Player } from 'src/types';
 import type { MatchTransitionData } from 'src/types/matchmaking';
 import { logger } from 'src/utils/logger';
-import { GameEventNames } from 'src/scenes/Gomoku/core/GameEventNames';
+import { GameEventNames } from '@/scenes/301_Gomoku/core/GameEventNames';
 import { SCENE_KEYS } from 'src/consts/scenes';
 import i18next from 'src/i18n/config';
 

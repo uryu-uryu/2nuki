@@ -9,11 +9,11 @@
 
 import type { Gomoku, Player } from 'src/types';
 import type { GameManagerEvents, GameUpdateData, DebugInfo } from 'src/types/gomoku';
-import { GomokuBoardManager } from 'src/scenes/Gomoku/core/GomokuBoardManager';
-import { GameRules } from 'src/scenes/Gomoku/core/GameRules';
-import { GameEvents } from 'src/scenes/Gomoku/core/GameEvents';
-import { SessionManager } from 'src/scenes/Gomoku/online/SessionManager';
-import { SyncManager } from 'src/scenes/Gomoku/online/SyncManager';
+import { GomokuBoardManager } from '@/scenes/301_Gomoku/core/GomokuBoardManager';
+import { GameRules } from '@/scenes/301_Gomoku/core/GameRules';
+import { GameEvents } from '@/scenes/301_Gomoku/core/GameEvents';
+import { SessionManager } from '@/scenes/301_Gomoku/online/SessionManager';
+import { SyncManager } from '@/scenes/301_Gomoku/online/SyncManager';
 
 export class GomokuContainer {
   private events: GameEvents;

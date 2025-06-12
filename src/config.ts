@@ -4,12 +4,12 @@
  */
 
 import * as Phaser from 'phaser';
-import { Boot } from 'src/scenes/Boot';
-import { Preloader } from 'src/scenes/Preloader';
-import { MainMenuScene } from 'src/scenes/MainMenu/MainMenuScene';
-import { PlayerSelectScene } from 'src/scenes/PlayerSelect/PlayerSelectScene';
-import { GomokuGameScene } from 'src/scenes/Gomoku/GomokuScene';
-import { MatchmakingScene } from 'src/scenes/Matchmaking/MatchmakingScene';
+import { Boot } from '@/scenes/001_Boot/Boot';
+import { Preloader } from '@/scenes/002_Preloader/Preloader';
+import { MainMenuScene } from '@/scenes/101_MainMenu/MainMenuScene';
+import { PlayerSelectScene } from '@/scenes/201_PlayerSelect/PlayerSelectScene';
+import { GomokuGameScene } from '@/scenes/301_Gomoku/GomokuScene';
+import { MatchmakingScene } from '@/scenes/202_Matchmaking/MatchmakingScene';
 import { LAYOUT } from '@/consts/styles/layout';
 import { COLORS } from '@/consts/styles/color';
 
