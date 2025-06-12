@@ -4,7 +4,7 @@ import { logger } from 'src/utils/logger';
 
 export class Boot extends Phaser.Scene {
   constructor() {
-    super(SCENE_KEYS.BOOT);
+    super(SCENE_KEYS._001_BOOT);
   }
 
   preload() {
@@ -25,7 +25,7 @@ export class Boot extends Phaser.Scene {
       logger.info('匿名ログインが完了しました');
 
       // プリローダーシーンに遷移
-      this.scene.start(SCENE_KEYS.PRELOADER);
+      this.scene.start(SCENE_KEYS._002_PRELOADER);
     } catch (error) {
       logger.error('匿名ログインに失敗しました', error);
       // TODO: エラー画面への遷移やリトライ機能の実装

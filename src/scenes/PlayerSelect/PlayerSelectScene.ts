@@ -8,7 +8,7 @@ import i18next from 'src/i18n/config';
 
 export class PlayerSelectScene extends Phaser.Scene {
   constructor() {
-    super(SCENE_KEYS.PLAYER_SELECT);
+    super(SCENE_KEYS._201_PLAYER_SELECT);
   }
 
   create() {
@@ -49,11 +49,11 @@ export class PlayerSelectScene extends Phaser.Scene {
     // ボタンのクリックイベント
     // ローカル環境のテスト用に、ひとまず固定の ＩＤ とする。
     player1Button.on('pointerdown', () => {
-      this.scene.start(SCENE_KEYS.GOMOKU_GAME, { playerId: 'EFB703BEA8688F46' });
+      this.scene.start(SCENE_KEYS._301_GOMOKU_GAME, { playerId: 'EFB703BEA8688F46' });
     });
 
     player2Button.on('pointerdown', () => {
-      this.scene.start(SCENE_KEYS.GOMOKU_GAME, { playerId: 'D4E0667168AEB3C' });
+      this.scene.start(SCENE_KEYS._301_GOMOKU_GAME, { playerId: 'D4E0667168AEB3C' });
     });
   }
 } 

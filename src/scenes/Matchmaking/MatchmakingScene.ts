@@ -40,7 +40,7 @@ export class MatchmakingScene extends Phaser.Scene {
   private pollingTimer!: Phaser.Time.TimerEvent;
 
   constructor() {
-    super(SCENE_KEYS.MATCHMAKING);
+    super(SCENE_KEYS._202_MATCHMAKING);
 
     // 初期状態を設定
     this.matchmakingState = {
@@ -348,7 +348,7 @@ export class MatchmakingScene extends Phaser.Scene {
       await this.delay(1000);
 
       // ゲームシーンに遷移（データを引き継ぎ）
-      this.scene.start(SCENE_KEYS.GOMOKU_GAME, transitionData);
+      this.scene.start(SCENE_KEYS._301_GOMOKU_GAME, transitionData);
     } catch (error) {
       logger.error('マッチ成立後の処理エラー:', error);
       this.setError(error instanceof Error ? error.message : 'ゲームの開始に失敗しました');
@@ -407,7 +407,7 @@ export class MatchmakingScene extends Phaser.Scene {
            */
   private goBackToMenu(): void {
     this.stopTimers();
-    this.scene.start(SCENE_KEYS.MAIN_MENU);
+    this.scene.start(SCENE_KEYS._101_MAIN_MENU);
   }
 
   /**

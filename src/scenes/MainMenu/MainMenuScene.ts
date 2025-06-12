@@ -9,7 +9,7 @@ import i18next from 'src/i18n/config';
 
 export class MainMenuScene extends Phaser.Scene {
   constructor() {
-    super(SCENE_KEYS.MAIN_MENU);
+    super(SCENE_KEYS._101_MAIN_MENU);
   }
 
   create() {
@@ -32,7 +32,7 @@ export class MainMenuScene extends Phaser.Scene {
     }).setOrigin(0.5).setInteractive({ useHandCursor: true })
       .on('pointerdown', () => {
         logger.info('プレイヤー選択画面に遷移');
-        this.scene.start(SCENE_KEYS.PLAYER_SELECT);
+        this.scene.start(SCENE_KEYS._201_PLAYER_SELECT);
       });
 
     // 言語切り替えボタン

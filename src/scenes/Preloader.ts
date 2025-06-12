@@ -14,7 +14,7 @@ export class Preloader extends Phaser.Scene {
   private progressBarFill!: Phaser.GameObjects.Rectangle;
 
   constructor() {
-    super(SCENE_KEYS.PRELOADER);
+    super(SCENE_KEYS._002_PRELOADER);
   }
 
   init() {
@@ -86,6 +86,6 @@ export class Preloader extends Phaser.Scene {
     // 例えば、ここでグローバルアニメーションを定義して、他のシーンで使えるようにできます。
 
     // MainMenuへ移動します。カメラフェードなどのシーントランジションに置き換えることもできます。
-    this.scene.start(SCENE_KEYS.MAIN_MENU);
+    this.scene.start(SCENE_KEYS._101_MAIN_MENU);
   }
 }

@@ -30,7 +30,7 @@ export class GomokuGameScene extends Phaser.Scene {
   private matchData?: MatchTransitionData;
 
   constructor() {
-    super(SCENE_KEYS.GOMOKU_GAME);
+    super(SCENE_KEYS._301_GOMOKU_GAME);
   }
 
   init(data?: MatchTransitionData | { playerId: string }) {
@@ -92,7 +92,7 @@ export class GomokuGameScene extends Phaser.Scene {
     this.ui.setupEventHandlers({
       onCreateGame: () => this.createNewGame(),
       onForfeitGame: () => this.forfeitGame(),
-      onBack: () => this.scene.start(SCENE_KEYS.MAIN_MENU)
+      onBack: () => this.scene.start(SCENE_KEYS._101_MAIN_MENU)
     });
 
     // 盤面の初期化
