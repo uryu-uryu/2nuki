@@ -6,10 +6,10 @@
 import * as Phaser from 'phaser';
 import { SCENE_KEYS } from '@/consts/scenes';
 import { COLORS } from '@/consts/styles/color';
-import { PRELOADER } from '@/consts/styles/components';
+import { ProgressBar, PRELOADER_PROGRESS_BAR_CONFIG } from '@/view/components/progressBar';
 
 export class Preloader extends Phaser.Scene {
-  private progressBar!: Phaser.GameObjects.Rectangle;
+  private progressBar!: ProgressBar;
 
   constructor() {
     super(SCENE_KEYS._002_PRELOADER);
@@ -18,32 +18,27 @@ export class Preloader extends Phaser.Scene {
   init() {
     // Bootシーンでこの画像をロードしたので、ここで表示できる
     this.add.image(
-      PRELOADER.PROGRESS_BAR.CENTER_X,
-      PRELOADER.PROGRESS_BAR.CENTER_Y,
+      PRELOADER_PROGRESS_BAR_CONFIG.CENTER_X,
+      PRELOADER_PROGRESS_BAR_CONFIG.CENTER_Y,
       'background'
     );
 
-    // プログレスフレーム
-    this.add.rectangle(
-      PRELOADER.PROGRESS_BAR.CENTER_X,
-      PRELOADER.PROGRESS_BAR.CENTER_Y,
-      PRELOADER.PROGRESS_BAR.WIDTH,
-      PRELOADER.PROGRESS_BAR.HEIGHT
-    ).setStrokeStyle(PRELOADER.PROGRESS_BAR.BORDER_WIDTH, COLORS.WHITE);
+    // 新しいProgressBarコンポーネントを使用
+    this.progressBar = new ProgressBar(this, {
+      x: PRELOADER_PROGRESS_BAR_CONFIG.CENTER_X,
+      y: PRELOADER_PROGRESS_BAR_CONFIG.CENTER_Y,
+      width: PRELOADER_PROGRESS_BAR_CONFIG.WIDTH,
+      height: PRELOADER_PROGRESS_BAR_CONFIG.HEIGHT,
+      borderWidth: PRELOADER_PROGRESS_BAR_CONFIG.BORDER_WIDTH,
+      borderColor: COLORS.WHITE,
+      barColor: COLORS.WHITE,
+      initialProgress: 0
+    });
 
-    // プログレスバー（初期状態）
-    this.progressBar = this.add.rectangle(
-      PRELOADER.PROGRESS_BAR.CENTER_X - PRELOADER.PROGRESS_BAR.BAR_OFFSET_X,
-      PRELOADER.PROGRESS_BAR.CENTER_Y,
-      PRELOADER.PROGRESS_BAR.BAR_INITIAL_WIDTH,
-      PRELOADER.PROGRESS_BAR.BAR_HEIGHT,
-      COLORS.WHITE
-    );
-
-    // LoaderPluginが発火する'progress'イベントを使って、ローディングバーを更新します
+    // LoaderPluginが発火する'progress'イベントを使って、ローディングバーを更新
     this.load.on('progress', (progress: number) => {
-      // プログレスバーを更新（バーは最大460px幅なので、100% = 460px）
-      this.progressBar.width = PRELOADER.PROGRESS_BAR.BAR_INITIAL_WIDTH + (PRELOADER.PROGRESS_BAR.MAX_BAR_WIDTH * progress);
+      // プログレスバーコンポーネントを使用して進捗を更新
+      this.progressBar.updateProgress(progress);
     });
   }
 

@@ -50,18 +50,6 @@ export const PRELOADER = {
   BACKGROUND: {
     WIDTH: 800,
     HEIGHT: 600
-  },
-
-  // プログレスバー設定（統一スタイル）
-  PROGRESS_BAR: {
-    CENTER_X: 512,
-    CENTER_Y: 384,
-    WIDTH: 468,
-    HEIGHT: 32,
-    BORDER_WIDTH: 1,
-    BAR_INITIAL_WIDTH: 4,
-    BAR_HEIGHT: 28,
-    BAR_OFFSET_X: 230, // バーの左端位置調整用
-    MAX_BAR_WIDTH: 460 // バーの最大幅
   }
+  // 注: プログレスバー設定は /src/view/components/progressBar.ts に移動
 } as const;
