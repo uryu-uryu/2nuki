@@ -9,7 +9,7 @@
 
 import type { Gomoku } from 'src/types';
 import type { GameSession } from 'src/types/gomoku';
-import { GameEvents } from '@/scenes/301_Gomoku/core/GameEvents';
+import { GameEvents } from '@/view/scenes/301_Gomoku/core/GameEvents';
 
 export class SessionManager {
   private activeSessions: Map<string, GameSession> = new Map();

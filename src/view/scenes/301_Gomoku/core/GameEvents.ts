@@ -9,7 +9,7 @@
 
 import type { Gomoku, Player } from 'src/types';
 import type { GameManagerEvents } from 'src/types/gomoku';
-import { GameEventNames } from '@/scenes/301_Gomoku/core/GameEventNames';
+import { GameEventNames } from '@/view/scenes/301_Gomoku/core/GameEventNames';
 
 export class GameEvents {
   private eventHandlers: Partial<GameManagerEvents> = {};
