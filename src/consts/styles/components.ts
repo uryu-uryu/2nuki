@@ -43,13 +43,3 @@ export const BOARD = {
   STONE_RADIUS: 12,
   get SIZE() { return BOARD_SIZE; }
 } as const;
-
-// プリローダー設定
-export const PRELOADER = {
-  // 背景画像サイズ
-  BACKGROUND: {
-    WIDTH: 800,
-    HEIGHT: 600
-  }
-  // 注: プログレスバー設定は /src/view/components/progressBar.ts に移動
-} as const;

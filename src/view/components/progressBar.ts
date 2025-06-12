@@ -6,15 +6,17 @@
 
 import * as Phaser from 'phaser';
 import { COLORS } from '@/consts/styles/color';
+import { LAYOUT } from '@/consts/styles/layout';
 
 /**
  * プリローダー用のプログレスバー設定
  * Preloaderシーンで使用される標準的なプログレスバーの設定値
+ * layout.ts の画面サイズに合わせて中央座標を設定
  */
 export const PRELOADER_PROGRESS_BAR_CONFIG = {
-  CENTER_X: 512,
-  CENTER_Y: 384,
-  WIDTH: 468,
+  CENTER_X: LAYOUT.GAME.WIDTH / 2,   // 1024 / 2 = 512
+  CENTER_Y: LAYOUT.GAME.HEIGHT / 2,  // 768 / 2 = 384
+  WIDTH: 400,
   HEIGHT: 32,
   BORDER_WIDTH: 1
 } as const;
@@ -61,10 +63,10 @@ export class ProgressBar {
   private currentProgress: number;
 
   /**
-     * プログレスバーを初期化
-     * @param scene - プログレスバーを表示するPhaserシーン
-     * @param options - プログレスバーの設定オプション
-     */
+       * プログレスバーを初期化
+       * @param scene - プログレスバーを表示するPhaserシーン
+       * @param options - プログレスバーの設定オプション
+       */
   constructor(scene: Phaser.Scene, options: ProgressBarOptions) {
     this.scene = scene;
     this.options = {
@@ -83,8 +85,8 @@ export class ProgressBar {
   }
 
   /**
-     * プログレスバーのUI要素を作成
-     */
+       * プログレスバーのUI要素を作成
+       */
   private createProgressBar(): void {
     const { width, height, borderWidth, borderColor, backgroundColor, barColor } = this.options;
 
@@ -118,9 +120,9 @@ export class ProgressBar {
   }
 
   /**
-     * 進捗を更新
-     * @param progress - 進捗値 (0.0 から 1.0)
-     */
+       * 進捗を更新
+       * @param progress - 進捗値 (0.0 から 1.0)
+       */
   public updateProgress(progress: number): void {
     // 進捗値を0-1の範囲にクランプ
     this.currentProgress = Math.max(0, Math.min(1, progress));
@@ -133,41 +135,41 @@ export class ProgressBar {
   }
 
   /**
-     * 現在の進捗値を取得
-     * @returns 現在の進捗値 (0.0 から 1.0)
-     */
+       * 現在の進捗値を取得
+       * @returns 現在の進捗値 (0.0 から 1.0)
+       */
   public getProgress(): number {
     return this.currentProgress;
   }
 
   /**
-     * プログレスバーの表示/非表示を切り替え
-     * @param visible - 表示するかどうか
-     */
+       * プログレスバーの表示/非表示を切り替え
+       * @param visible - 表示するかどうか
+       */
   public setVisible(visible: boolean): void {
     this.container.setVisible(visible);
   }
 
   /**
-     * プログレスバーの位置を変更
-     * @param x - 新しいX座標
-     * @param y - 新しいY座標
-     */
+       * プログレスバーの位置を変更
+       * @param x - 新しいX座標
+       * @param y - 新しいY座標
+       */
   public setPosition(x: number, y: number): void {
     this.container.setPosition(x, y);
   }
 
   /**
-     * プログレスバーを破棄
-     */
+       * プログレスバーを破棄
+       */
   public destroy(): void {
     this.container.destroy();
   }
 
   /**
-     * プログレスバーのコンテナを取得
-     * @returns Phaser.GameObjects.Container
-     */
+       * プログレスバーのコンテナを取得
+       * @returns Phaser.GameObjects.Container
+       */
   public getContainer(): Phaser.GameObjects.Container {
     return this.container;
   }
