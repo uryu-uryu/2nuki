@@ -52,24 +52,16 @@ export const PRELOADER = {
     HEIGHT: 600
   },
 
-  // 古いスタイルのプログレスバー設定（init()メソッド用）
-  OLD_STYLE: {
+  // プログレスバー設定（統一スタイル）
+  PROGRESS_BAR: {
     CENTER_X: 512,
     CENTER_Y: 384,
-    FRAME_WIDTH: 468,
-    FRAME_HEIGHT: 32,
-    BAR_INITIAL_WIDTH: 4,
-    BAR_HEIGHT: 28,
-    BAR_OFFSET_X: 230,
-    MAX_BAR_WIDTH: 460
-  },
-
-  // TODO: そもそも progress bar componentを作るべきで、そちらに寄せるべき
-  PROGRESS_BAR: {
     WIDTH: 468,
     HEIGHT: 32,
     BORDER_WIDTH: 1,
-    BAR_WIDTH: 4,
-    BAR_HEIGHT: 28
+    BAR_INITIAL_WIDTH: 4,
+    BAR_HEIGHT: 28,
+    BAR_OFFSET_X: 230, // バーの左端位置調整用
+    MAX_BAR_WIDTH: 460 // バーの最大幅
   }
 } as const;
